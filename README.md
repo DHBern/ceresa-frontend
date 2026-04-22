@@ -10,6 +10,10 @@ This repository includes a GitHub Actions workflow that deploys a live preview o
 
 The workflow makes the most recent version of the CETEIcean-based transformation layer available as a static preview, linked in the [oXygen framework](https://github.com/DHBern/ceresa-oxygen-framework/).
 
+Running the preview on WebDAV has the advantage that all files are served from the same origin and no CORS issues occur.
+
+In contrast to this, developing the preview code is much more ergonomically here than directly on WebDAV.
+
 #### Behavior
 
 * Triggered on every push and via manual execution (`workflow_dispatch`)
@@ -26,18 +30,20 @@ The workflow makes the most recent version of the CETEIcean-based transformation
     ```
     preview/
     ```
-  * Updates a log file at:
+  * Logs all synchronised changes at:
 
     ```
-    preview/update-log.md
+    preview/logs
     ```
-
-    recording:
-
+    
+    <details><summary><h4>Logging format</h4></summary>
+    
     * timestamp (UTC)
     * commit hash (short)
     * author
     * list of changed files (A/M/D)
+    
+    </details>
 
 <details><summary><h4>Configuration</h4></summary>
 
