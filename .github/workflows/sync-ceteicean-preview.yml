@@ -83,4 +83,4 @@ jobs:
       - name: Sync CETEIcean to WebDAV
         if: steps.changes.outputs.changed == 'true'
         run: |
-          rclone sync src/lib/CETEIcean webdav:preview --delete-during
+          rclone sync src/lib/CETEIcean webdav:preview --delete-during -exclude "logs/**"
