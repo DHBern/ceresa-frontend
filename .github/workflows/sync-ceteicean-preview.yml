@@ -75,7 +75,7 @@ jobs:
             echo ""
             echo "#### Changes"
             sed 's/^/- /' changes.txt
-          } > "logs/$FILENAME"
+          } > "/src/lib/CETEIcean/logs/$FILENAME"
 
       - name: Sync CETEIcean to WebDAV
         if: steps.changes.outputs.changed == 'true'
