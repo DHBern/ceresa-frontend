@@ -77,10 +77,10 @@ jobs:
           } > log-entry.md
 
           # fetch existing log (if present)
-          rclone --config rclone.conf copyto webdav:preview/update-log.md existing-log.md || touch existing-log.md
+          rclone copyto webdav:preview/update-log.md existing-log.md || touch existing-log.md
 
           # prepend new entry
           cat log-entry.md existing-log.md > new-log.md
 
           # upload as single file (important!)
-          rclone --config rclone.conf copyto new-log.md webdav:preview/update-log.md
+          rclone copyto new-log.md webdav:preview/update-log.md
