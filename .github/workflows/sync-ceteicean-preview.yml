@@ -52,7 +52,7 @@ jobs:
             url = ${{ secrets.WEBDAV_URL }}
             vendor = other
             user = ${{ secrets.WEBDAV_USERNAME }}
-            pass = $(rclone obscure "${{ secrets.WEBDAV_PASSWORD }}")
+            pass = ${{ secrets.WEBDAV_PASSWORD }}
           EOF
 
       - name: Sync CETEIcean to WebDAV
