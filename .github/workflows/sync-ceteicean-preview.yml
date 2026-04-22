@@ -47,10 +47,10 @@ jobs:
         run: |
           mkdir -p ~/.config/rclone
           cat <<EOF > ~/.config/rclone/rclone.conf
-          webdav:
+            [webdav]
             type = webdav
             url = ${{ secrets.WEBDAV_URL }}
-            vendor = other
+            vendor = apache
             user = ${{ secrets.WEBDAV_USERNAME }}
             pass = ${{ secrets.WEBDAV_PASSWORD }}
           EOF
