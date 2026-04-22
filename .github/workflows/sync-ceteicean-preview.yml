@@ -80,9 +80,13 @@ jobs:
             sed 's/^/- /' changes.txt
           } > "$LOG_DIR/$FILENAME"
 
+          cat "$LOG_DIR/$FILENAME"
+
       - name: Sync CETEIcean to WebDAV
         if: steps.changes.outputs.changed == 'true'
         run: |
+          ls src/lib/CETEIcean/logs
+
           # 1. sync everything EXCEPT logs
           rclone sync src/lib/CETEIcean webdav:preview --delete-during --exclude "logs/**"
 
