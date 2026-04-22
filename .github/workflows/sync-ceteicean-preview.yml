@@ -91,4 +91,5 @@ jobs:
           rclone sync src/lib/CETEIcean webdav:preview --delete-during --exclude "logs/**"
 
           # 2. separately sync logs WITHOUT deletion
-          rclone sync src/lib/CETEIcean/logs webdav:preview/logs
+          rclone copy src/lib/CETEIcean/logs webdav:preview/logs
+
