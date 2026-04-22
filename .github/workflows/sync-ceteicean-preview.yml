@@ -76,11 +76,11 @@ jobs:
             echo ""
           } > log-entry.md
 
-          # fetch existing log (if present)
-          rclone copyto webdav:preview/update-log.md existing-log.md || touch existing-log.md
+          # get existing log properly
+          rclone cat webdav:preview/update-log.md > existing-log.md || true
 
-          # prepend new entry
-          cat log-entry.md existing-log.md > new-log.md
+          # prepend
+          cat log-entry.md existing-log.md > update-log.md
 
-          # upload as single file (important!)
-          rclone copyto new-log.md webdav:preview/update-log.md
+          # upload
+          rclone copyto update-log.md webdav:preview/update-log.md
