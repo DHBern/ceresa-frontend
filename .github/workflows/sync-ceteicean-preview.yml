@@ -1,0 +1,82 @@
+name: Sync CETEIcean Preview to WebDAV
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Detect changes in CETEIcean
+        id: changes
+        run: |
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.sha }}"
+
+          # handle first commit or force push
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            CHANGED=$(git ls-files src/lib/CETEIcean || true)
+            echo "$CHANGED" | sed 's/^/A /' > changes.txt
+          else
+            git diff --name-status "$BEFORE" "$AFTER" | grep '^.\s\+src/lib/CETEIcean' > changes.txt || true
+          fi
+
+          if [ ! -s changes.txt ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Exit early if no relevant changes
+        if: steps.changes.outputs.changed == 'false'
+        run: echo "No changes in src/lib/CETEIcean — skipping sync."
+
+      - name: Install rclone
+        if: steps.changes.outputs.changed == 'true'
+        run: curl https://rclone.org/install.sh | sudo bash
+
+      - name: Configure rclone (WebDAV)
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          mkdir -p ~/.config/rclone
+          cat <<EOF > ~/.config/rclone/rclone.conf
+          webdav:
+            type = webdav
+            url = ${{ secrets.WEBDAV_URL }}
+            vendor = other
+            user = ${{ secrets.WEBDAV_USERNAME }}
+            pass = $(rclone obscure "${{ secrets.WEBDAV_PASSWORD }}")
+          EOF
+
+      - name: Sync CETEIcean to WebDAV
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          rclone sync src/lib/CETEIcean webdav:preview --delete-during
+
+      - name: Update remote log
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          COMMIT=$(git rev-parse --short HEAD)
+          AUTHOR=$(git log -1 --pretty=format:'%an')
+
+          {
+            echo "### $DATE"
+            echo "- Commit: $COMMIT"
+            echo "- Author: $AUTHOR"
+            echo "- Changes:"
+            sed 's/^/- /' changes.txt
+            echo ""
+          } > log-entry.md
+
+          # Try to fetch existing log
+          rclone copy webdav:preview/update-log.md . || touch update-log.md
+
+          cat log-entry.md update-log.md > new-log.md
+
+          rclone copy new-log.md webdav:preview/update-log.md
