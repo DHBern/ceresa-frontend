@@ -61,7 +61,7 @@ jobs:
           DEPLOY_DIR="src/lib/CETEIcean"
           LOG_DIR="$DEPLOY_DIR/logs"
 
-          DATE_FILE=$(date -u +"%Y-%m-%d_%H-%M")
+          DATE_FILE=$(date -u +"%Y-%m-%d_%H-%M-%S")
           DATE_HUMAN=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           COMMIT=$(git rev-parse --short HEAD)
           AUTHOR=$(git log -1 --pretty=format:'%an')
