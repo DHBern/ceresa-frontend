@@ -83,4 +83,8 @@ jobs:
       - name: Sync CETEIcean to WebDAV
         if: steps.changes.outputs.changed == 'true'
         run: |
+          # 1. sync everything EXCEPT logs
           rclone sync src/lib/CETEIcean webdav:preview --delete-during --exclude "logs/**"
+
+          # 2. separately sync logs WITHOUT deletion
+          rclone sync src/lib/CETEIcean/logs webdav:preview/logs
