@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TEI Preview – Ceresa</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="ui-styles.css">
+
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body class="mode-lf">
+
+
+
+  <header id="header">
+
+    <h1>TEI Preview</h1>
+
+    <span class="filename" id="filename"></span>
+
+    <div class="mode-toggle" id="mode-toggle">
+
+      <button type="button" class="toggle-btn active" id="btn-lf" aria-pressed="true">Lesefassung</button>
+
+      <button type="button" class="toggle-btn" id="btn-df" aria-pressed="false">Diplomatische Fassung</button>
+
+    </div>
+
+  </header>
+
+
+
+  <main id="TEI">
+
+    <p class="placeholder">No TEI file specified.</p>
+
+  </main>
+
+
+
+  <section id="endnotes" hidden>
+
+    <hr><h2>Notes</h2>
+
+    <ol id="endnote-list"></ol>
+
+  </section>
+
+
+
+  <footer>
+
+    Rendered with <a href="https://github.com/TEIC/CETEIcean" target="_blank" rel="noopener">CETEIcean</a>
+
+  </footer>
+
+
+
+  <script src="https://github.com/TEIC/CETEIcean/releases/download/v1.9.5/CETEI.js"></script>
+
+  <script src="behaviours.js"></script>
+
+</body>
+
+</html>

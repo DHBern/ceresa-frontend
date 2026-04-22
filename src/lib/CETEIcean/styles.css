@@ -1,0 +1,2389 @@
+/* ══════════════════════════════════════════════════════════════════
+
+   Ceresa TEI Preview – Stylesheet
+
+   Aligned with ceresa.framework / tei_ceresa.odd / default.css
+
+   ══════════════════════════════════════════════════════════════════ */
+
+
+
+:root {
+
+  /* Fonts */
+
+  --font-ui-text: "EB Garamond", "Georgia", "Times New Roman", serif;
+
+  --font-ui-head: "EB Garamond", "Georgia", serif;
+
+  --font-ui-mono: "Fira Code", "Consolas", "Courier New", monospace;
+
+
+
+  /* Colors */
+
+  --color-bg: #fdfcf9;
+
+  --color-fg: #1a1a1a;
+
+  --color-muted: #666;
+
+  --color-rule: #ccc;
+
+  --color-link: #8b0000;
+
+  --color-link-hover: #b22222;
+
+  --color-note-bg: #f5f3ee;
+
+
+
+  /* Editorial colours (from default.css) */
+
+  --color-add: #2d8a2d;
+
+  --color-del: #b91c1c;
+
+  --color-hw: #1d6fa4;
+
+  --color-tw-add: #2d8a2d;
+
+  --color-tw-del: #b91c1c;
+
+  --color-subst-bg: #fffbe6;
+
+  --color-supplied-bg: #eeeeee;
+
+  --color-unclear-border: #92400e;
+
+
+
+  /* Choice colours */
+
+  --color-sic: #ffdddd;
+
+  --color-corr: #e8ffdd;
+
+  --color-orig: #e0d4f0;
+
+  --color-reg: #d0eaff;
+
+  --color-abbr: #fee090;
+
+  --color-expan: #e0f3f8;
+
+
+
+  /* Note colours */
+
+  --color-note-annotation-bg: #fef9c3;
+
+  --color-note-annotation-border: #eab308;
+
+  --color-note-endnote-bg: #e0f2fe;
+
+  --color-note-endnote-border: #0ea5e9;
+
+  --color-note-footnote-bg: #ede9fe;
+
+  --color-note-footnote-border: #7c3aed;
+
+  --color-note-figure-bg: #dcfce7;
+
+  --color-note-figure-border: #16a34a;
+
+
+
+  /* Entity colours (from default.css) */
+
+  --color-rs-person: #7c3aed;
+
+  --color-rs-place: #0891b2;
+
+  --color-rs-org: #b45309;
+
+  --color-rs-work: #15803d;
+
+}
+
+
+
+/* ══════════════════════════════════════════════════════════════════
+
+   SHARED STYLES (both modes)
+
+   ══════════════════════════════════════════════════════════════════ */
+
+
+
+/* ── TEI Structure ──────────────────────────────────────────────── */
+
+tei-tei {
+
+  display: block;
+
+}
+
+tei-teiheader {
+
+  display: none;
+
+}
+
+tei-text {
+
+  display: block;
+
+}
+
+tei-front,
+
+tei-body,
+
+tei-back {
+
+  display: block;
+
+}
+
+tei-div {
+
+  display: block;
+
+  margin-top: 1.5rem;
+
+  margin-bottom: 1.5rem;
+
+}
+
+
+
+/* ── Headings ───────────────────────────────────────────────────── */
+
+tei-head {
+
+  display: block;
+
+  font-family: var(--font-head);
+
+  font-weight: 600;
+
+  line-height: 1.3;
+
+  margin-top: 1.5em;
+
+  margin-bottom: 0.5em;
+
+}
+
+
+
+tei-body > tei-head,
+
+tei-front > tei-head,
+
+tei-back > tei-head {
+
+  font-size: 2rem;
+
+  margin-top: 0;
+
+}
+
+tei-div > tei-head {
+
+  font-size: 1.65rem;
+
+}
+
+tei-div > tei-div > tei-head {
+
+  font-size: 1.4rem;
+
+}
+
+tei-div > tei-div > tei-div > tei-head {
+
+  font-size: 1.2rem;
+
+}
+
+tei-div > tei-div > tei-div > tei-div > tei-head {
+
+  font-size: 1.1rem;
+
+}
+
+
+
+/* ── Paragraphs ─────────────────────────────────────────────────── */
+
+tei-p {
+
+  display: block;
+
+  font-family: var(--font-text);
+
+  margin-top: 0.8em;
+
+  margin-bottom: 0.8em;
+
+  text-align: justify;
+
+  hyphens: auto;
+
+}
+
+
+
+tei-ab {
+
+  display: block;
+
+  margin-top: 0.8em;
+
+  margin-bottom: 0.8em;
+
+}
+
+
+
+/* ── Inline Emphasis: hi with @rendition (project ODD) ──────────── */
+
+tei-hi[rendition~="#b"] {
+
+  font-weight: bold;
+
+}
+
+tei-hi[rendition~="#i"] {
+
+  font-style: italic;
+
+}
+
+tei-hi[rendition~="#u"] {
+
+  text-decoration: underline;
+
+}
+
+tei-hi[rendition~="#sub"] {
+
+  vertical-align: sub;
+
+  font-size: 0.8em;
+
+}
+
+tei-hi[rendition~="#sup"] {
+
+  vertical-align: super;
+
+  font-size: 0.8em;
+
+}
+
+tei-hi[rendition~="#g"] {
+
+  letter-spacing: 0.15em;
+
+}
+
+tei-hi[rendition~="#c"] {
+
+  display: block;
+
+  text-align: center;
+
+}
+
+
+
+/* Fallback: @rend attribute (generic TEI) */
+
+tei-emph,
+
+tei-hi[rend~="italic"],
+
+tei-hi[rend~="italics"] {
+
+  font-style: italic;
+
+}
+
+tei-hi[rend~="bold"] {
+
+  font-weight: 700;
+
+}
+
+tei-hi[rend~="underline"] {
+
+  text-decoration: underline;
+
+}
+
+tei-hi[rend~="smallcaps"],
+
+tei-hi[rend~="small-caps"],
+
+tei-hi[rend~="sc"] {
+
+  font-variant: small-caps;
+
+}
+
+tei-hi[rend~="caps"],
+
+tei-hi[rend~="uppercase"] {
+
+  text-transform: uppercase;
+
+}
+
+tei-hi[rend~="superscript"],
+
+tei-hi[rend~="sup"] {
+
+  vertical-align: super;
+
+  font-size: 0.8em;
+
+}
+
+tei-hi[rend~="subscript"],
+
+tei-hi[rend~="sub"] {
+
+  vertical-align: sub;
+
+  font-size: 0.8em;
+
+}
+
+tei-hi[rend~="strike"],
+
+tei-hi[rend~="strikethrough"],
+
+tei-hi[rend~="line-through"] {
+
+  text-decoration: line-through;
+
+}
+
+tei-hi[rend~="spaced"],
+
+tei-hi[rend~="letter-spacing"] {
+
+  letter-spacing: 0.15em;
+
+}
+
+
+
+/* ── Titles ─────────────────────────────────────────────────────── */
+
+tei-title {
+
+  font-style: italic;
+
+}
+
+tei-title[level="a"] {
+
+  font-style: normal;
+
+}
+
+tei-title[level="a"]::before {
+
+  content: "\201C";
+
+}
+
+tei-title[level="a"]::after {
+
+  content: "\201D";
+
+}
+
+tei-title[level="m"] {
+
+  font-style: italic;
+
+}
+
+tei-title[level="j"] {
+
+  font-style: italic;
+
+}
+
+tei-title[level="u"] {
+
+  font-style: normal;
+
+  text-decoration: none;
+
+}
+
+
+
+/* ── Names & Terms ──────────────────────────────────────────────── */
+
+tei-term {
+
+  font-style: italic;
+
+}
+
+tei-mentioned {
+
+  font-style: italic;
+
+}
+
+tei-socalled::before {
+
+  content: "\2018";
+
+}
+
+tei-socalled::after {
+
+  content: "\2019";
+
+}
+
+
+
+/* ── Reference Strings (rs) — colour-coded by type ──────────────── */
+
+tei-rs[type="person"] {
+
+  border-bottom: 3px solid var(--color-rs-person);
+
+}
+
+tei-rs[type="place"] {
+
+  border-bottom: 3px solid var(--color-rs-place);
+
+}
+
+tei-rs[type="org"] {
+
+  border-bottom: 3px solid var(--color-rs-org);
+
+}
+
+tei-rs[type="work"] {
+
+  border-bottom: 3px solid var(--color-rs-work);
+
+}
+
+
+
+/* ── Quotation ──────────────────────────────────────────────────── */
+
+tei-q::before {
+
+  content: "\201C";
+
+}
+
+tei-q::after {
+
+  content: "\201D";
+
+}
+
+tei-q[next]::after {
+
+  content: "";
+
+}
+
+tei-q[prev]::before {
+
+  content: "";
+
+}
+
+tei-quote {
+
+  display: block;
+
+  margin: 1em 2em;
+
+  font-style: italic;
+
+}
+
+tei-quote[rend~="inline"],
+
+tei-p > tei-quote,
+
+tei-said > tei-quote {
+
+  display: inline;
+
+  margin: 0;
+
+}
+
+tei-said::before {
+
+  content: "\201C";
+
+}
+
+tei-said::after {
+
+  content: "\201D";
+
+}
+
+tei-said[direct="false"]::before,
+
+tei-said[direct="false"]::after {
+
+  content: "";
+
+}
+
+tei-cit {
+
+  display: block;
+
+  margin: 1em 2em;
+
+}
+
+tei-cit > tei-bibl {
+
+  display: block;
+
+  text-align: right;
+
+  font-size: 0.9em;
+
+  color: var(--color-muted);
+
+  margin-top: 0.3em;
+
+}
+
+tei-epigraph {
+
+  display: block;
+
+  margin: 1.5em 2em;
+
+  font-style: italic;
+
+  color: var(--color-muted);
+
+}
+
+
+
+/* ── Notes (shared base) ────────────────────────────────────────── */
+
+tei-note {
+
+  font-size: 0.88em;
+
+  color: var(--color-muted);
+
+}
+
+
+
+tei-note::before {
+
+  content: " [";
+
+}
+
+tei-note::after {
+
+  content: "] ";
+
+}
+
+
+
+/* Suppress brackets for collected notes (endnotes/footnotes) */
+
+tei-note[type="endnote"],
+
+tei-note[type="footnote"] {
+
+  font-size: inherit;
+
+  color: inherit;
+
+}
+
+tei-note[type="endnote"]::before,
+
+tei-note[type="endnote"]::after,
+
+tei-note[type="footnote"]::before,
+
+tei-note[type="footnote"]::after {
+
+  content: none;
+
+}
+
+
+
+/* Note type styling (from default.css) */
+
+tei-note[type="annotation"] {
+
+  background: var(--color-note-annotation-bg);
+
+  border-left: 3px solid var(--color-note-annotation-border);
+
+  padding: 2px 6px;
+
+  border-radius: 2px;
+
+}
+
+
+
+tei-note[type="figure_note"] {
+
+  background: var(--color-note-figure-bg);
+
+  border-left: 3px solid var(--color-note-figure-border);
+
+  padding: 2px 6px;
+
+  border-radius: 2px;
+
+}
+
+
+
+/* ── Verse ──────────────────────────────────────────────────────── */
+
+tei-l {
+
+  display: block;
+
+  padding-left: 2em;
+
+  text-indent: -2em;
+
+}
+
+tei-lg {
+
+  display: block;
+
+  margin: 1em 0;
+
+}
+
+tei-caesura::before {
+
+  content: "   ";
+
+}
+
+
+
+/* ── Breaks (shared base) ───────────────────────────────────────── */
+
+tei-milestone {
+
+  display: inline;
+
+  color: var(--color-muted);
+
+  font-size: 0.8em;
+
+}
+
+tei-milestone[unit]::before {
+
+  content: " [" attr(unit) "\00a0" attr(n) "] ";
+
+}
+
+
+
+/* ── Lists ──────────────────────────────────────────────────────── */
+
+tei-list {
+
+  display: block;
+
+  margin: 0.8em 0;
+
+  padding-left: 1.5em;
+
+}
+
+tei-item {
+
+  display: list-item;
+
+  list-style-type: disc;
+
+  margin-left: 0.5em;
+
+}
+
+tei-list[type="ordered"] {
+
+  counter-reset: tei-list-counter;
+
+}
+
+tei-list[type="ordered"] > tei-item {
+
+  list-style-type: none;
+
+  counter-increment: tei-list-counter;
+
+}
+
+tei-list[type="ordered"] > tei-item::before {
+
+  content: counter(tei-list-counter) ".\00a0";
+
+  font-weight: 500;
+
+}
+
+tei-list[type="simple"] > tei-item,
+
+tei-list[rend~="simple"] > tei-item {
+
+  list-style-type: none;
+
+}
+
+tei-list[type="gloss"] > tei-label {
+
+  display: block;
+
+  font-weight: 600;
+
+  margin-top: 0.5em;
+
+}
+
+tei-list[type="gloss"] > tei-item {
+
+  list-style-type: none;
+
+  margin-left: 1.5em;
+
+  margin-bottom: 0.3em;
+
+}
+
+tei-label {
+
+  font-weight: 600;
+
+}
+
+
+
+/* ── Tables ─────────────────────────────────────────────────────── */
+
+tei-table {
+
+  display: table;
+
+  border-collapse: collapse;
+
+  margin: 1.5em auto;
+
+  font-size: 0.92em;
+
+}
+
+tei-table > tei-head {
+
+  display: table-caption;
+
+  caption-side: top;
+
+  font-weight: 600;
+
+  font-style: italic;
+
+  margin-bottom: 0.5em;
+
+  text-align: center;
+
+}
+
+tei-row {
+
+  display: table-row;
+
+}
+
+tei-row[role="label"] {
+
+  font-weight: 600;
+
+  background: var(--color-note-bg);
+
+}
+
+tei-cell {
+
+  display: table-cell;
+
+  padding: 0.35em 0.75em;
+
+  border: 1px solid var(--color-rule);
+
+  vertical-align: top;
+
+}
+
+tei-cell[role="label"] {
+
+  font-weight: 600;
+
+}
+
+
+
+/* HTML tables generated by behaviour */
+
+table {
+
+  border-collapse: collapse;
+
+  margin: 1.5em auto;
+
+  font-size: 0.92em;
+
+}
+
+table caption {
+
+  caption-side: top;
+
+  font-weight: 600;
+
+  font-style: italic;
+
+  margin-bottom: 0.5em;
+
+  text-align: center;
+
+}
+
+table th,
+
+table td {
+
+  padding: 0.35em 0.75em;
+
+  border: 1px solid var(--color-rule);
+
+  vertical-align: top;
+
+}
+
+table th {
+
+  font-weight: 600;
+
+  background: var(--color-note-bg);
+
+}
+
+
+
+/* ── Figures ────────────────────────────────────────────────────── */
+
+tei-figure {
+
+  display: block;
+
+  text-align: center;
+
+  margin: 1.5em auto;
+
+}
+
+tei-figure > tei-head {
+
+  display: block;
+
+  font-size: 0.9em;
+
+  font-weight: 500;
+
+  margin-top: 0.5em;
+
+  font-style: italic;
+
+}
+
+tei-figure > tei-figdesc {
+
+  display: block;
+
+  font-size: 0.85em;
+
+  color: var(--color-muted);
+
+  margin-top: 0.3em;
+
+}
+
+tei-graphic img {
+
+  max-width: 100%;
+
+  height: auto;
+
+}
+
+
+
+/* ── Links ──────────────────────────────────────────────────────── */
+
+tei-ref a,
+
+tei-ptr a {
+
+  color: var(--color-link);
+
+  text-decoration: underline;
+
+  text-decoration-thickness: 1px;
+
+  text-underline-offset: 0.15em;
+
+}
+
+tei-ref a:hover,
+
+tei-ptr a:hover {
+
+  color: var(--color-link-hover);
+
+}
+
+
+
+/* ── Bibliography ───────────────────────────────────────────────── */
+
+tei-bibl {
+
+  display: block;
+
+  padding-left: 2em;
+
+  text-indent: -2em;
+
+  margin-bottom: 0.3em;
+
+}
+
+tei-listbibl {
+
+  display: block;
+
+  margin: 1em 0;
+
+}
+
+tei-listbibl > tei-head {
+
+  font-weight: 600;
+
+  font-size: 1.1em;
+
+  margin-bottom: 0.5em;
+
+}
+
+tei-editor::before {
+
+  content: "(ed.) ";
+
+  font-variant: small-caps;
+
+  font-size: 0.85em;
+
+}
+
+
+
+/* ── Drama ──────────────────────────────────────────────────────── */
+
+tei-sp {
+
+  display: block;
+
+  margin-top: 0.8em;
+
+}
+
+tei-speaker {
+
+  display: inline;
+
+  font-weight: 700;
+
+  font-variant: small-caps;
+
+  margin-right: 0.5em;
+
+}
+
+tei-speaker::after {
+
+  content: ".\00a0";
+
+}
+
+tei-stage {
+
+  display: block;
+
+  font-style: italic;
+
+  color: var(--color-muted);
+
+  margin: 0.5em 0;
+
+}
+
+tei-stage[type="direction"] {
+
+  display: inline;
+
+}
+
+tei-stage[type="direction"]::before {
+
+  content: "(";
+
+}
+
+tei-stage[type="direction"]::after {
+
+  content: ")";
+
+}
+
+tei-castlist {
+
+  display: block;
+
+  margin: 1em 0;
+
+}
+
+tei-castitem {
+
+  display: block;
+
+  margin: 0.3em 0;
+
+}
+
+tei-role {
+
+  font-weight: 600;
+
+}
+
+tei-roledesc {
+
+  font-style: italic;
+
+  color: var(--color-muted);
+
+}
+
+tei-roledesc::before {
+
+  content: " – ";
+
+}
+
+
+
+/* ── Letters ────────────────────────────────────────────────────── */
+
+tei-opener,
+
+tei-closer {
+
+  display: block;
+
+  margin: 1em 0;
+
+}
+
+tei-salute {
+
+  display: block;
+
+  margin-bottom: 0.5em;
+
+}
+
+tei-signed {
+
+  display: block;
+
+  margin-top: 1em;
+
+  text-align: right;
+
+}
+
+tei-dateline {
+
+  display: block;
+
+  text-align: right;
+
+  color: var(--color-muted);
+
+}
+
+tei-postscript {
+
+  display: block;
+
+  margin-top: 1.5em;
+
+  border-top: 1px solid var(--color-rule);
+
+  padding-top: 0.5em;
+
+}
+
+tei-byline {
+
+  display: block;
+
+  color: var(--color-muted);
+
+  font-size: 0.9em;
+
+  margin-bottom: 1em;
+
+}
+
+tei-address {
+
+  display: block;
+
+  margin: 0.5em 0;
+
+}
+
+tei-addrline {
+
+  display: block;
+
+}
+
+
+
+/* ── Apparatus ──────────────────────────────────────────────────── */
+
+tei-lem {
+
+}
+
+tei-rdg {
+
+  display: none;
+
+}
+
+tei-code,
+
+tei-eg {
+
+  font-family: var(--font-mono);
+
+  font-size: 0.88em;
+
+  background: var(--color-note-bg);
+
+  padding: 0.1em 0.3em;
+
+  border-radius: 3px;
+
+}
+
+tei-gi {
+
+  font-family: var(--font-mono);
+
+  font-size: 0.88em;
+
+}
+
+tei-gi::before {
+
+  content: "<";
+
+}
+
+tei-gi::after {
+
+  content: ">";
+
+}
+
+tei-att {
+
+  font-family: var(--font-mono);
+
+  font-size: 0.88em;
+
+}
+
+tei-att::before {
+
+  content: "@";
+
+}
+
+tei-val {
+
+  font-family: var(--font-mono);
+
+  font-size: 0.88em;
+
+}
+
+tei-val::before {
+
+  content: '"';
+
+}
+
+tei-val::after {
+
+  content: '"';
+
+}
+
+.tei-apparatus[title] {
+
+  cursor: help;
+
+  border-bottom: 1px dotted var(--color-link);
+
+}
+
+
+
+/* ── Dates ──────────────────────────────────────────────────────── */
+
+tei-date[when]:empty::before {
+
+  content: attr(when);
+
+}
+
+
+
+/* ── Front Matter ───────────────────────────────────────────────── */
+
+tei-titlepage {
+
+  display: block;
+
+  text-align: center;
+
+  margin: 2rem 0 3rem;
+
+  padding: 2rem 1rem;
+
+  border: 1px solid var(--color-rule);
+
+}
+
+tei-titlepage tei-title {
+
+  display: block;
+
+  font-size: 1.8rem;
+
+  font-weight: 600;
+
+  margin-bottom: 0.5em;
+
+  font-style: normal;
+
+}
+
+tei-docauthor {
+
+  display: block;
+
+  font-size: 1.2rem;
+
+  margin: 0.5em 0;
+
+}
+
+tei-docdate {
+
+  display: block;
+
+  color: var(--color-muted);
+
+  margin-top: 1em;
+
+}
+
+tei-docimprint {
+
+  display: block;
+
+  margin-top: 0.5em;
+
+}
+
+tei-docedition {
+
+  display: block;
+
+  font-style: italic;
+
+}
+
+tei-imprimatur {
+
+  display: block;
+
+  font-style: italic;
+
+  text-align: center;
+
+  margin: 1em 0;
+
+}
+
+tei-argument {
+
+  display: block;
+
+  font-style: italic;
+
+  margin: 1em 2em;
+
+}
+
+
+
+/* Anchors */
+
+tei-anchor {
+
+  display: none;
+
+}
+
+
+
+/* ── Endnote Markers ────────────────────────────────────────────── */
+
+a.endnote-ref {
+
+  color: var(--color-link);
+
+  text-decoration: none;
+
+  font-size: 0.75em;
+
+  vertical-align: super;
+
+  font-weight: 500;
+
+  line-height: 0;
+
+}
+
+a.endnote-ref:hover {
+
+  text-decoration: underline;
+
+}
+
+a.endnote-back {
+
+  color: var(--color-link);
+
+  text-decoration: none;
+
+  font-size: 0.85em;
+
+  margin-right: 0.3em;
+
+}
+
+
+
+/* ── Generated Elements ─────────────────────────────────────────── */
+
+.tei-verse-line {
+
+  display: block;
+
+  padding-left: 2em;
+
+  text-indent: -2em;
+
+  position: relative;
+
+}
+
+.line-number {
+
+  position: absolute;
+
+  right: calc(100% + 0.8em);
+
+  color: var(--color-muted);
+
+  font-size: 0.8em;
+
+  user-select: none;
+
+}
+
+
+
+/* ══════════════════════════════════════════════════════════════════
+
+   LESEFASSUNG (LF)
+
+   ══════════════════════════════════════════════════════════════════ */
+
+
+
+/* ── Choice: interactive toggle ──────────────────────────────────── */
+
+tei-choice {
+
+  cursor: pointer;
+
+  border-bottom: 1px dotted var(--color-muted);
+
+}
+
+
+
+/* Choice: show regularised readings, hide diplomatic originals */
+
+body.mode-lf tei-choice > tei-sic {
+
+  display: none;
+
+}
+
+body.mode-lf tei-choice > tei-orig {
+
+  display: none;
+
+}
+
+body.mode-lf tei-choice > tei-abbr {
+
+  display: none;
+
+}
+
+
+
+/* LF toggled → show diplomatic reading instead */
+
+body.mode-lf tei-choice.choice-toggled > tei-sic {
+
+  display: inline;
+
+  background: var(--color-sic);
+
+  padding: 0 2px;
+
+  border-radius: 2px;
+
+}
+
+body.mode-lf tei-choice.choice-toggled > tei-orig {
+
+  display: inline;
+
+  background: var(--color-orig);
+
+  padding: 0 2px;
+
+  border-radius: 2px;
+
+}
+
+body.mode-lf tei-choice.choice-toggled > tei-abbr {
+
+  display: inline;
+
+  background: var(--color-abbr);
+
+  padding: 0 2px;
+
+  border-radius: 2px;
+
+}
+
+body.mode-lf tei-choice.choice-toggled > tei-corr {
+
+  display: none;
+
+}
+
+body.mode-lf tei-choice.choice-toggled > tei-reg {
+
+  display: none;
+
+}
+
+body.mode-lf tei-choice.choice-toggled > tei-expan {
+
+  display: none;
+
+}
+
+
+
+/* Editorial: clean text — deletions hidden, additions inline */
+
+body.mode-lf tei-del {
+
+  display: none;
+
+}
+
+body.mode-lf tei-add {
+
+  display: inline;
+
+  color: inherit;
+
+}
+
+body.mode-lf tei-subst {
+
+  display: inline;
+
+}
+
+body.mode-lf tei-subst > tei-del {
+
+  display: none;
+
+}
+
+body.mode-lf tei-subst > tei-add {
+
+  display: inline;
+
+  color: inherit;
+
+}
+
+
+
+/* Supplied: subtle brackets */
+
+body.mode-lf tei-supplied {
+
+  color: var(--color-muted);
+
+}
+
+body.mode-lf tei-supplied::before {
+
+  content: "[";
+
+  color: var(--color-muted);
+
+}
+
+body.mode-lf tei-supplied::after {
+
+  content: "]";
+
+  color: var(--color-muted);
+
+}
+
+
+
+/* Gap */
+
+body.mode-lf tei-gap {
+
+  color: var(--color-muted);
+
+  font-style: italic;
+
+}
+
+body.mode-lf tei-gap::before {
+
+  content: "[…]";
+
+}
+
+body.mode-lf tei-gap[reason]::before {
+
+  content: "[" attr(reason) "]";
+
+}
+
+
+
+/* Unclear */
+
+body.mode-lf tei-unclear {
+
+  color: var(--color-muted);
+
+}
+
+
+
+/* Breaks: hidden for clean text flow */
+
+body.mode-lf tei-lb {
+
+  display: none;
+
+}
+
+body.mode-lf tei-pb {
+
+  display: none;
+
+}
+
+body.mode-lf tei-cb {
+
+  display: none;
+
+}
+
+
+
+/* Hyphens before break="no" line breaks: hidden in LF */
+
+body.mode-lf .hyphen-before-break {
+
+  display: none;
+
+}
+
+
+
+/* Forme work, handShift, metamark: hidden */
+
+body.mode-lf tei-fw {
+
+  display: none;
+
+}
+
+body.mode-lf tei-handshift {
+
+  display: none;
+
+}
+
+body.mode-lf tei-metamark {
+
+  display: none;
+
+}
+
+
+
+/* Foreign: italic only */
+
+body.mode-lf tei-foreign {
+
+  font-style: italic;
+
+}
+
+
+
+/* ══════════════════════════════════════════════════════════════════
+
+   DIPLOMATISCHE FASSUNG (DF)
+
+   ══════════════════════════════════════════════════════════════════ */
+
+
+
+/* ── Choice: show diplomatic originals, hide regularised ────────── */
+
+body.mode-df tei-choice > tei-corr {
+
+  display: none;
+
+}
+
+body.mode-df tei-choice > tei-reg {
+
+  display: none;
+
+}
+
+body.mode-df tei-choice > tei-expan {
+
+  display: none;
+
+}
+
+
+
+body.mode-df tei-choice > tei-sic {
+
+  background: var(--color-sic);
+
+  padding: 0 2px;
+
+  border-radius: 2px;
+
+}
+
+body.mode-df tei-choice > tei-orig {
+
+  background: var(--color-orig);
+
+  padding: 0 2px;
+
+  border-radius: 2px;
+
+}
+
+body.mode-df tei-choice > tei-abbr {
+
+  background: var(--color-abbr);
+
+  padding: 0 2px;
+
+  border-radius: 2px;
+
+}
+
+
+
+/* DF toggled → show regularised reading instead */
+
+body.mode-df tei-choice.choice-toggled > tei-corr {
+
+  display: inline;
+
+  background: var(--color-corr);
+
+  padding: 0 2px;
+
+  border-radius: 2px;
+
+}
+
+body.mode-df tei-choice.choice-toggled > tei-reg {
+
+  display: inline;
+
+  background: var(--color-reg);
+
+  padding: 0 2px;
+
+  border-radius: 2px;
+
+}
+
+body.mode-df tei-choice.choice-toggled > tei-expan {
+
+  display: inline;
+
+  background: var(--color-expan);
+
+  padding: 0 2px;
+
+  border-radius: 2px;
+
+}
+
+body.mode-df tei-choice.choice-toggled > tei-sic {
+
+  display: none;
+
+}
+
+body.mode-df tei-choice.choice-toggled > tei-orig {
+
+  display: none;
+
+}
+
+body.mode-df tei-choice.choice-toggled > tei-abbr {
+
+  display: none;
+
+}
+
+
+
+/* ── Line Breaks ────────────────────────────────────────────────── */
+
+body.mode-df tei-lb {
+
+  display: block;
+
+}
+
+
+
+body.mode-df tei-lb[break="no"] {
+
+  display: block;
+
+}
+
+
+
+/* ── Page Breaks ────────────────────────────────────────────────── */
+
+body.mode-df tei-pb {
+
+  display: block;
+
+  text-align: center;
+
+  color: var(--color-muted);
+
+  font-size: 0.8em;
+
+  margin: 1em 0 0.5em;
+
+  border-top: 1px solid var(--color-rule);
+
+  padding-top: 0.4em;
+
+}
+
+
+
+body.mode-df tei-pb::before {
+
+  content: "[ p.\00a0" attr(n) " ]";
+
+}
+
+
+
+/* ── Column Breaks ──────────────────────────────────────────────── */
+
+body.mode-df tei-cb {
+
+  display: inline;
+
+  color: var(--color-muted);
+
+  font-size: 0.8em;
+
+}
+
+
+
+body.mode-df tei-cb::before {
+
+  content: " ‖ ";
+
+}
+
+body.mode-df tei-cb[break="no"]::before {
+
+  content: "‖";
+
+}
+
+
+
+/* ── Deletions ──────────────────────────────────────────────────── */
+
+body.mode-df tei-del {
+
+  display: inline;
+
+  text-decoration: line-through;
+
+  color: var(--color-del);
+
+}
+
+
+
+body.mode-df tei-del[rend="overstrike"] {
+
+  text-decoration: line-through;
+
+}
+
+body.mode-df tei-del[rend="overtyped"] {
+
+  text-decoration: line-through double;
+
+}
+
+body.mode-df tei-del[rend="erasure"] {
+
+  text-decoration: line-through wavy;
+
+}
+
+
+
+/* Hand-based colours */
+
+body.mode-df tei-del[hand="#authorial_hw"] {
+
+  color: var(--color-hw);
+
+}
+
+body.mode-df tei-del[hand="#authorial_tw"] {
+
+  color: var(--color-tw-del);
+
+}
+
+
+
+/* ── Additions ──────────────────────────────────────────────────── */
+
+body.mode-df tei-add {
+
+  display: inline;
+
+  color: var(--color-add);
+
+}
+
+
+
+/* Hand-based colours */
+
+body.mode-df tei-add[hand="#authorial_hw"] {
+
+  color: var(--color-hw);
+
+}
+
+body.mode-df tei-add[hand="#authorial_tw"] {
+
+  color: var(--color-tw-add);
+
+}
+
+
+
+/* Placement markers */
+
+body.mode-df tei-add[place="above"] {
+
+  vertical-align: super;
+
+  font-size: 0.85em;
+
+}
+
+body.mode-df tei-add[place="above"]::before {
+
+  content: "⌜";
+
+  color: var(--color-muted);
+
+}
+
+body.mode-df tei-add[place="above"]::after {
+
+  content: "⌝";
+
+  color: var(--color-muted);
+
+}
+
+
+
+body.mode-df tei-add[place="below"] {
+
+  vertical-align: sub;
+
+  font-size: 0.85em;
+
+}
+
+body.mode-df tei-add[place="below"]::before {
+
+  content: "⌞";
+
+  color: var(--color-muted);
+
+}
+
+body.mode-df tei-add[place="below"]::after {
+
+  content: "⌟";
+
+  color: var(--color-muted);
+
+}
+
+
+
+body.mode-df tei-add[place="inline"]::before {
+
+  content: "⌜";
+
+  color: var(--color-muted);
+
+}
+
+body.mode-df tei-add[place="inline"]::after {
+
+  content: "⌟";
+
+  color: var(--color-muted);
+
+}
+
+
+
+body.mode-df tei-add[place="margin"]::before {
+
+  content: "‹";
+
+  color: var(--color-muted);
+
+}
+
+body.mode-df tei-add[place="margin"]::after {
+
+  content: "›";
+
+  color: var(--color-muted);
+
+}
+
+
+
+body.mode-df tei-add[place="over"]::before {
+
+  content: "{";
+
+  color: var(--color-muted);
+
+}
+
+body.mode-df tei-add[place="over"]::after {
+
+  content: "}";
+
+  color: var(--color-muted);
+
+}
+
+
+
+/* ── Substitutions ──────────────────────────────────────────────── */
+
+body.mode-df tei-subst {
+
+  display: inline;
+
+  background: var(--color-subst-bg);
+
+  padding: 0 3px;
+
+  border-radius: 2px;
+
+}
+
+
+
+/* Arrow between del and add inside subst */
+
+body.mode-df tei-subst > tei-add::before {
+
+  content: "→";
+
+  color: var(--color-muted);
+
+  margin: 0 0.15em;
+
+  font-size: 0.85em;
+
+}
+
+
+
+/* Override arrow when add also has placement */
+
+body.mode-df tei-subst > tei-add[place="over"]::before {
+
+  content: "→{";
+
+  color: var(--color-muted);
+
+}
+
+
+
+/* ── Supplied ───────────────────────────────────────────────────── */
+
+body.mode-df tei-supplied {
+
+  background: var(--color-supplied-bg);
+
+  padding: 0 2px;
+
+  border-radius: 2px;
+
+}
+
+
+
+body.mode-df tei-supplied::before {
+
+  content: "[";
+
+  color: var(--color-muted);
+
+  font-weight: 600;
+
+}
+
+body.mode-df tei-supplied::after {
+
+  content: "]";
+
+  color: var(--color-muted);
+
+  font-weight: 600;
+
+}
+
+
+
+/* ── Gap ────────────────────────────────────────────────────────── */
+
+body.mode-df tei-gap {
+
+  color: var(--color-muted);
+
+  font-style: italic;
+
+}
+
+
+
+body.mode-df tei-gap::before {
+
+  content: "[…]";
+
+}
+
+body.mode-df tei-gap[reason]::before {
+
+  content: "[" attr(reason) "]";
+
+}
+
+
+
+/* ── Unclear ────────────────────────────────────────────────────── */
+
+body.mode-df tei-unclear {
+
+  border-bottom: 2px dotted var(--color-unclear-border);
+
+}
+
+
+
+body.mode-df tei-unclear::after {
+
+  content: " [?]";
+
+  color: var(--color-muted);
+
+  font-size: 0.8em;
+
+  font-style: italic;
+
+}
+
+
+
+/* ── Foreign ────────────────────────────────────────────────────── */
+
+body.mode-df tei-foreign {
+
+  font-style: italic;
+
+  background: #edf2f7;
+
+  padding: 0 3px;
+
+  border-radius: 2px;
+
+}
+
+
+
+body.mode-df tei-foreign[xml\:lang]::after {
+
+  content: " [" attr(xml\:lang) "]";
+
+  color: var(--color-muted);
+
+  font-size: 0.8em;
+
+  font-style: normal;
+
+}
+
+
+
+/* ── Forme Work ─────────────────────────────────────────────────── */
+
+body.mode-df tei-fw {
+
+  display: block;
+
+  text-align: center;
+
+  color: var(--color-muted);
+
+  font-size: 0.85em;
+
+  font-style: italic;
+
+  margin: 0.5em 0;
+
+}
+
+
+
+/* ── Hand Shift ─────────────────────────────────────────────────── */
+
+body.mode-df tei-handshift {
+
+  display: inline;
+
+  color: var(--color-muted);
+
+  font-size: 0.8em;
+
+}
+
+
+
+body.mode-df tei-handshift::before {
+
+  content: "✍ ";
+
+}
+
+
+
+/* ── Metamark ───────────────────────────────────────────────────── */
+
+body.mode-df tei-metamark {
+
+  display: inline;
+
+  color: var(--color-muted);
+
+  font-size: 0.85em;
+
+  font-style: italic;
+
+}
+
+
+
+body.mode-df tei-metamark::before {
+
+  content: "⟨";
+
+}
+
+body.mode-df tei-metamark::after {
+
+  content: "⟩";
+
+}
+
+
+
+/* ── Punctuation Characters ─────────────────────────────────────── */
+
+body.mode-df tei-pc {
+
+  color: purple;
+
+}
+
+
+
+/* ── Space ──────────────────────────────────────────────────────── */
+
+body.mode-df tei-space::before {
+
+  content: "□";
+
+  color: var(--color-muted);
+
+}
+
+
+
+/* ── Floating Text ──────────────────────────────────────────────── */
+
+body.mode-df tei-floatingtext {
+
+  display: block;
+
+  border: 1px dashed var(--color-rule);
+
+  padding: 0.5em 1em;
+
+  margin: 1em 0;
+
+}

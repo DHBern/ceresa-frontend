@@ -1,0 +1,181 @@
+/* ── Reset & Variables ──────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  /* Fonts */
+  --font-ui-text: "EB Garamond", "Georgia", "Times New Roman", serif;
+  --font-ui-head: "EB Garamond", "Georgia", serif;
+  --font-ui-mono: "Fira Code", "Consolas", "Courier New", monospace;
+
+  /* Colors */
+  --color-ui-bg: #fdfcf9;
+  --color-ui-fg: #1a1a1a;
+  --color-ui-muted: #666;
+  --color-ui-rule: #ccc;
+  --color-ui-link: #8b0000;
+  --color-ui-link-hover: #b22222;
+
+  /* Layout */
+  --ui-line-height: 1.7;
+  --ui-max-width: 44rem;
+}
+
+html {
+  font-size: 17px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-ui-text);
+  color: var(--color-ui-fg);
+  background: var(--color-ui-bg);
+  line-height: var(--ui-line-height);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header Bar ─────────────────────────────────────────────────── */
+#header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid var(--color-ui-rule);
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#header h1 {
+  margin: 0;
+  font-family: var(--font-ui-head);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+#header .filename {
+  font-family: var(--font-ui-mono);
+  font-size: 0.82rem;
+  color: var(--color-ui-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* ── Mode Toggle ────────────────────────────────────────────────── */
+.mode-toggle {
+  display: flex;
+  gap: 0;
+  margin-left: auto;
+  border: 1px solid var(--color-ui-rule);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  font-family: var(--font-ui-text);
+  font-size: 0.82rem;
+  padding: 0.3rem 0.75rem;
+  border: none;
+  background: #fff;
+  color: var(--color-ui-muted);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+  white-space: nowrap;
+}
+
+.toggle-btn:not(:last-child) {
+  border-right: 1px solid var(--color-ui-rule);
+}
+
+.toggle-btn:hover {
+  background: #f5f5f5;
+}
+
+.toggle-btn.active {
+  background: var(--color-ui-fg);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ── Layout ─────────────────────────────────────────────────────── */
+main#TEI,
+#endnotes {
+  max-width: var(--ui-max-width);
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.placeholder,
+.loading,
+.error {
+  text-align: center;
+  color: var(--color-ui-muted);
+  margin-top: 6rem;
+}
+
+.loading {
+  font-style: italic;
+}
+.error {
+  color: #b22222;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--color-ui-muted);
+  padding: 2rem 1rem;
+  border-top: 1px solid var(--color-ui-rule);
+  margin-top: 3rem;
+}
+
+footer a {
+  color: var(--color-ui-link);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Responsive & Print
+   ══════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 52rem) {
+  html {
+    font-size: 14px;
+  }
+  main#TEI,
+  #endnotes {
+    padding: 0 1rem;
+  }
+  #header {
+    padding: 0.5rem 1rem;
+    flex-wrap: wrap;
+  }
+  .mode-toggle {
+    margin-left: 0;
+  }
+}
+
+@media print {
+  #header {
+    display: none;
+  }
+  footer {
+    display: none;
+  }
+  main#TEI {
+    max-width: 100%;
+  }
+  .mode-toggle {
+    display: none;
+  }
+}
