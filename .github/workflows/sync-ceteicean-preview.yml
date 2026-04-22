@@ -58,6 +58,9 @@ jobs:
       - name: Create deployment log entry
         if: steps.changes.outputs.changed == 'true'
         run: |
+          DEPLOY_DIR="src/lib/CETEIcean"
+          LOG_DIR="$DEPLOY_DIR/logs"
+
           DATE_FILE=$(date -u +"%Y-%m-%d_%H-%M")
           DATE_HUMAN=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           COMMIT=$(git rev-parse --short HEAD)
@@ -65,7 +68,7 @@ jobs:
 
           FILENAME="${DATE_FILE}_${COMMIT}.md"
 
-          mkdir -p logs
+          mkdir -p "$LOG_DIR"
 
           {
             echo "### Deployment $DATE_HUMAN"
@@ -75,7 +78,7 @@ jobs:
             echo ""
             echo "#### Changes"
             sed 's/^/- /' changes.txt
-          } > "/src/lib/CETEIcean/logs/$FILENAME"
+          } > "$LOG_DIR/$FILENAME"
 
       - name: Sync CETEIcean to WebDAV
         if: steps.changes.outputs.changed == 'true'
