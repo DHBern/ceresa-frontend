@@ -3,10 +3,8 @@ To restrict CSS to view-modes use:
 
 - data-textflow='fluid'
 - data-textflow='paged'
-- data-fassung='DF'
-- data-fassung='LF'
-- data-dom='global_comment'
-- data-dom='containerAnnotations'
+- .mode-df
+- .mode-lf
 
 -------------------------------- */
 
@@ -106,16 +104,9 @@ tei-p {
 	hyphens: auto;
 }
 
-[data-dom='global_comment'] {
-	/* //! FIX: this is needed, as long as custom-elements are not propperly attached in the global_comment */
-	tei-p {
-		display: block;
-	}
-}
-
 /* -------------------------------- */
 /* Page Breaks */
-[data-fassung='DF'] {
+.mode-df {
 	tei-pb {
 		display: block;
 		text-align: center;
@@ -147,13 +138,13 @@ tei-lb:after {
 
 /* -------------------------------- */
 /* Forme work */
-[data-fassung='LF'] {
+.mode-lf {
 	tei-fw {
 		display: none;
 	}
 }
 
-[data-fassung='DF'] {
+.mode-df {
 	tei-fw {
 		display: block;
 		color: var(--color-muted);
@@ -179,12 +170,12 @@ tei-lb:after {
 /* -------------------------------- */
 /* Medium (handShift) */
 
-[data-fassung='LF'] {
+.mode-lf {
 	tei-handshift {
 		display: none;
 	}
 }
-[data-fassung='DF'] {
+.mode-df {
 	tei-handshift {
 		display: inline;
 		color: var(--color-muted);
@@ -199,7 +190,7 @@ tei-lb:after {
 /* -------------------------------- */
 /* Foreign */
 
-[data-fassung='DF'] {
+.mode-df {
 	tei-foreign {
 		font-style: italic;
 		background: var(--color-foreign);
@@ -256,7 +247,7 @@ tei-hi[rendition~='#r'] {
 
 /* -------------------------------- */
 /* Punctuation */
-[data-fassung='DF'] {
+.mode-df {
 	tei-pc {
 		color: var(--color-punctuation);
 	}
@@ -264,7 +255,7 @@ tei-hi[rendition~='#r'] {
 
 /* -------------------------------- */
 /* Space */
-[data-fassung='DF'] {
+.mode-df {
 	tei-space::before {
 		content: '□';
 		color: var(--color-muted);
@@ -279,8 +270,8 @@ tei-quote::before {
 tei-quote::after {
 	content: '»';
 }
-[data-fassung='DF'] tei-quote::before,
-[data-fassung='DF'] tei-quote::after {
+.mode-df tei-quote::before,
+.mode-df tei-quote::after {
 	color: var(--color-punctuation);
 }
 
@@ -290,13 +281,7 @@ tei-quote::after {
 
 /* Substitutions, Additions and Deletions */
 
-	tei-del {
-		/* text-decoration: line-through; */
-    font-weight: bolder;
-    color: blue;
-	}
-
-[data-fassung='DF'] {
+.mode-df {
 	/* inline */
 	tei-add[place='inline']:before {
 		content: '⌜';
@@ -344,7 +329,7 @@ tei-quote::after {
 	}
 }
 
-[data-fassung='LF'] {
+.mode-lf {
 	tei-subst {
 		display: inline;
 	}
@@ -363,13 +348,13 @@ tei-quote::after {
 
 /* -------------------------------- */
 /* Metamarks */
-[data-fassung='LF'] {
+.mode-lf {
 	tei-metamark {
 		display: none;
 	}
 }
 
-[data-fassung='DF'] {
+.mode-df {
 	tei-metamark {
 		display: inline;
 		color: var(--color-muted);
@@ -393,7 +378,7 @@ tei-quote::after {
 /* -------------------------------- */
 /* Editorial Supplements */
 
-[data-fassung='LF'] {
+.mode-lf {
 	tei-supplied {
 		color: var(--color-muted);
 	}
@@ -428,12 +413,12 @@ tei-gap[reason]::before {
 /* -------------------------------- */
 /* Unclear */
 
-[data-fassung='LF'] {
+.mode-lf {
 	tei-unclear {
 		color: var(--color-muted);
 	}
 }
-[data-fassung='DF'] {
+.mode-df {
 	tei-unclear {
 		border-bottom: 2px dotted var(--color-unclear-border);
 	}
@@ -449,7 +434,7 @@ tei-gap[reason]::before {
 /* Choice */
 
 /* ── LF: show regularised readings, hide diplomatic originals */
-[data-fassung='LF'] {
+.mode-lf {
 	tei-choice > tei-sic,
 	tei-choice > tei-orig,
 	tei-choice > tei-abbr {
@@ -460,7 +445,7 @@ tei-gap[reason]::before {
 /* ── DF: show striked diplomatic originals, frame regularised */
 
 /* TODO */
-[data-fassung='DF'] {
+.mode-df {
 	tei-choice > tei-sic,
 	tei-choice > tei-orig,
 	tei-choice > tei-abbr {
@@ -525,7 +510,7 @@ span.note-mark.active {
 /* -------------------------------- */
 /* Footnotes */
 
-[data-fassung='LF'] {
+.mode-lf {
 	tei-text span.footnote {
 		cursor: pointer;
 		border: 1px solid var(--color-footnote-circle);
@@ -555,7 +540,7 @@ span.note-mark.active {
 	}
 }
 
-[data-fassung='DF'] {
+.mode-df {
 	tei-note {
 		display: none;
 	}
@@ -573,9 +558,7 @@ tei-anchor {
 /* -------------------------------- */
 /* Referencing Strings */
 
-[data-dom='global_comment'],
-[data-textflow='fluid'],
-[data-dom='containerAnnotations'] {
+[data-textflow='fluid'] {
 	/* Hover and Active */
 	tei-rs:hover,
 	tei-rs.active,
@@ -632,40 +615,3 @@ tei-anchor {
 	}
 }
 
-[data-dom='global_comment'],
-[data-dom='containerAnnotations'] {
-	tei-rs {
-		cursor: pointer;
-		border-bottom-width: 1.5px;
-		border-bottom-style: solid;
-		border-bottom-color: var(--color-background-contrast);
-
-		&[type='smallform']:hover,
-		&[type='longform']:hover,
-		&[type='letter']:hover {
-			border-bottom-color: var(--color-rs-doc);
-		}
-		&[type='person']:hover {
-			border-bottom-color: var(--color-rs-person);
-		}
-		&[type='place']:hover {
-			border-bottom-color: var(--color-rs-place);
-		}
-		&[type='org']:hover {
-			border-bottom-color: var(--color-rs-org);
-		}
-		&[type='work']:hover {
-			border-bottom-color: var(--color-rs-work);
-		}
-		&[type='bibl']:hover {
-			border-bottom-color: var(--color-rs-bibl);
-		}
-		&[type='event']:hover,
-		&[type='travel']:hover {
-			border-bottom-color: var(--color-rs-event);
-		}
-		&[type='keyword']:hover {
-			border-bottom-color: var(--color-rs-keyword);
-		}
-	}
-}
