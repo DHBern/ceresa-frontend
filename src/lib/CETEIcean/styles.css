@@ -290,6 +290,12 @@ tei-quote::after {
 
 /* Substitutions, Additions and Deletions */
 
+	tei-del {
+		/* text-decoration: line-through; */
+    font-weight: bolder;
+    color: blue;
+	}
+
 [data-fassung='DF'] {
 	/* inline */
 	tei-add[place='inline']:before {
@@ -328,8 +334,7 @@ tei-quote::after {
 	}
 	/* substitution */
 	tei-del {
-		/* text-decoration: line-through; */
-    font-weight: bolder;
+		text-decoration: line-through;
 	}
 	tei-add[place='over']:before {
 		content: '{';
