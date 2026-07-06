@@ -9,9 +9,9 @@
 :root {
   /* Fonts */
 
-  --font-ui-text: "EB Garamond", "Georgia", "Times New Roman", serif;
-  --font-ui-head: "EB Garamond", "Georgia", serif;
-  --font-ui-mono: "Fira Code", "Consolas", "Courier New", monospace;
+  --font-text: "EB Garamond", "Georgia", "Times New Roman", serif;
+  --font-head: "EB Garamond", "Georgia", serif;
+  --font-mono: "Fira Code", "Consolas", "Courier New", monospace;
   /* Colors */
 
   --color-bg: #fdfcf9;
