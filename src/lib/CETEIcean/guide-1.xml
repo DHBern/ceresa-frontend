@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-model href="https://dhbern.github.io/ceresa-oxygen-framework/tei_ceresa.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?><?xml-model href="https://dhbern.github.io/ceresa-oxygen-framework/ceresa.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI
+  xmlns="http://www.tei-c.org/ns/1.0"
+  xml:id="A-1-b_1-1"
+  type="ceresa"
+  xml:base="https://arcipelago-ceresa.digitaleditions.ch/guide#"
+>
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Guide</title>
+        <respStmt>
+          <resp>Text encoding</resp>
+          <name />
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher />
+        <date />
+        <availability>
+          <licence target="https://creativecommons.org/licenses/by/4.0/"
+            >CC BY 4.0</licence
+          >
+        </availability>
+      </publicationStmt>
+      <notesStmt>
+        <note type="global_comment">
+          <p />
+        </note>
+      </notesStmt>
+      <sourceDesc>
+        <msDesc>
+          <msIdentifier>
+            <repository
+              >Archivio svizzero di letteratura (ASL): Lascito Alice
+              Ceresa</repository
+            >
+            <idno type="ASL">A-1-b/1-1</idno>
+          </msIdentifier>
+        </msDesc>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+      <langUsage>
+        <language ident="it" />
+      </langUsage>
+      <textClass>
+        <keywords ana="keywords">
+          <list>
+            <item />
+          </list>
+        </keywords>
+      </textClass>
+    </profileDesc>
+  </teiHeader>
+  <xi:include
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="https://dav.arcipelago-ceresa.digitaleditions.ch/data/sources/facs/A-1/A-1-b/A-1-b_1/A-1-b_1-1/A-1-b_1-1_facs.xml"
+  >
+    <xi:fallback />
+  </xi:include>
+  <text>
+    <body>
+      <!-- ######################################################### -->
+      <!-- (1) DOCUMENT AND LAYOUT -->
+      <!-- ######################################################### -->
+      <h1>(1) Document and Layout</h1>
+      <!-- Headings -->
+      <h2>Headings</h2>
+      <div>
+        <head>
+          <lb />
+          Default Heading
+        </head>
+        <p>
+          <lb />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+
+        <head rendition="#c">
+          <lb />
+          Centered Heading
+        </head>
+        <p>
+          <lb />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <head rendition="#right">
+          <lb />
+          Right aligned Heading
+        </head>
+        <p>
+          <lb />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <head hand="#hw">
+          <lb />
+          Handwritten Heading
+        </head>
+        <p>
+          <lb />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <head hand="#tw">
+          <lb />
+          Typed Heading
+        </head>
+        <p>
+          <lb />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <head hand="#person_0001">
+          <lb />
+          Heading with hand
+        </head>
+        <p>
+          <lb />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+
+        <head>
+          <lb />
+          Heading on
+          <lb />
+          two lines
+        </head>
+        <p>
+          <lb />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+      </div>
+
+      <!-- Page Beginning -->
+      <h2>Page Beginnings with printed page numbers</h2>
+      <div>
+        <pb
+          xml:id="p001"
+          n="1"
+          facs="https://iiif.ub.unibe.ch/image/v3/ceresa/A-1-b_1-1_001.tif"
+        />
+        <p>
+          <lb />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt
+          <pb
+            xml:id="p002"
+            n="2"
+            facs="https://iiif.ub.unibe.ch/image/v3/ceresa/A-1-b_1-1_001.tif"
+          />
+          ut labore et dolore magna aliqua.
+        </p>
+        <h2>Page Beginnings without printed page numbers</h2>
+        <pb
+          xml:id="p001"
+          facs="https://iiif.ub.unibe.ch/image/v3/ceresa/A-1-b_1-1_001.tif"
+        />
+        <p>
+          <lb />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt
+          <pb
+            xml:id="p002"
+            facs="https://iiif.ub.unibe.ch/image/v3/ceresa/A-1-b_1-1_001.tif"
+          />
+          ut labore et dolore magna aliqua.
+        </p>
+      </div>
+
+      <!-- Page numbers, catchwords and signatures -->
+      <h2>Page Numbers</h2>
+      <div>
+        <ab><fw type="pageNum" place="top">11</fw></ab>
+        <ab><fw type="pageNum" place="bottom">11</fw></ab>
+        <ab><fw type="pageNum" place="topleft">11</fw></ab>
+        <ab><fw type="pageNum" place="topcenter">11</fw></ab>
+        <ab><fw type="pageNum" place="topright">11</fw></ab>
+        <ab><fw type="pageNum" place="bottomleft">11</fw></ab>
+        <ab><fw type="pageNum" place="bottomcenter">11</fw></ab>
+        <ab><fw type="pageNum" place="bottomright">11</fw></ab>
+      </div>
+
+      <h2>Catchwords</h2>
+      <div>
+        <ab><fw type="catch" place="top">A</fw></ab>
+        <ab><fw type="catch" place="bottom">A</fw></ab>
+        <ab><fw type="catch" place="topleft">A</fw></ab>
+        <ab><fw type="catch" place="topcenter">A</fw></ab>
+        <ab><fw type="catch" place="topright">A</fw></ab>
+        <ab><fw type="catch" place="bottomleft">A</fw></ab>
+        <ab><fw type="catch" place="bottomcenter">A</fw></ab>
+        <ab><fw type="catch" place="bottomright">A</fw></ab>
+      </div>
+      <h2>Signatures</h2>
+      <div>
+        <ab><fw type="sig" place="top">A. Ceresa</fw></ab>
+        <ab><fw type="sig" place="bottom">A. Ceresa</fw></ab>
+        <ab><fw type="sig" place="topleft">A. Ceresa</fw></ab>
+        <ab><fw type="sig" place="topcenter">A. Ceresa</fw></ab>
+        <ab><fw type="sig" place="topright">A. Ceresa</fw></ab>
+        <ab><fw type="sig" place="bottomleft">A. Ceresa</fw></ab>
+        <ab><fw type="sig" place="bottomcenter">A. Ceresa</fw></ab>
+        <ab><fw type="sig" place="bottomright">A. Ceresa</fw></ab>
+      </div>
+
+      <!-- A pagenumber and a catchword at the top of a manuscript leaf -->
+      <h2>Pagenumber and Catchword on one line</h2>
+      <div>
+        <ab>
+          <fw type="pageNum" place="topleft">3</fw>
+          <fw type="catch" place="topright">A</fw>
+        </ab>
+        <ab>
+          <fw type="pageNum" place="topleft">3</fw>
+          <fw type="catch" place="topright">A</fw>
+        </ab>
+      </div>
+
+      <!-- Line Beginnings -->
+      <div>
+        <h2>Line Beginnings (without hyphenation)</h2>
+        <p>
+          <lb />Molti mammiferi dispongono di un naturale controllo delle
+          nascite <lb />in quanto la ricettività fisiologica femminile avviene
+          <lb />ciclicamente a intervalli notevolmente distanziati.
+        </p>
+
+        <h2>Line Beginnings (with hyphenation)</h2>
+        <!-- Hyphenation across a line boundary — the hyphen is retained and break="no" marks the continuation -->
+        <p>
+          <lb />copulazione di due diversi organismi bio<pc>-</pc
+          ><lb break="no" />logici, uno femminile e l'altro maschile
+        </p>
+
+        <!-- Special cases -->
+        <p>
+          <lb />Comment vas-<lb break="yes" />tu ? <lb />Die neue Ceresa-<lb
+            break="yes"
+          />Ausgabe ist ...
+        </p>
+      </div>
+
+      <!-- Significant Blank Space -->
+      <!-- Horizontal space of 1-20 characters -->
+      <div>
+        <h2>Horizontal space of 1-20 characters</h2>
+
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="1" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="2" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="3" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="4" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="5" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="6" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="7" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="8" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="9" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="10" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="11" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="12" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="13" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="14" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="15" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="16" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="17" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="18" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="19" />Data:
+          1923
+        </p>
+        <p>
+          <lb />Nome: Alice Ceresa<space dim="horizontal" quantity="20" />Data:
+          1923
+        </p>
+      </div>
+
+      <!-- Vertical space of 1-3 rows between two paragraphs -->
+      <div>
+        <h2>Vertical space of 1-3 rows between two paragraphs</h2>
+        <p><lb />La prima pagina della biografia ...</p>
+        <space dim="vertical" quantity="1" />
+        <p><lb />Ad ogni dubbio ...</p>
+      </div>
+      <div>
+        <p><lb />La prima pagina della biografia ...</p>
+        <space dim="vertical" quantity="2" />
+        <p><lb />Ad ogni dubbio ...</p>
+      </div>
+      <div>
+        <p><lb />La prima pagina della biografia ...</p>
+        <space dim="vertical" quantity="3" />
+        <p><lb />Ad ogni dubbio ...</p>
+      </div>
+
+      <!-- Typographic Highlighting -->
+      <div>
+        <h2>Typographic Highlighting</h2>
+        <p>
+          <lb /><hi rendition="#b">Lorem ipsum dolor sit amet</hi> <lb /><hi
+            rendition="#i"
+            >Lorem ipsum dolor sit amet</hi
+          >
+          <lb /><hi rendition="#u">Lorem ipsum dolor sit amet</hi> <lb /><hi
+            rendition="#b #i #u"
+            >Lorem ipsum dolor sit amet</hi
+          >
+          <lb />Lorem ipsum dolor<hi rendition="#sup">sit amet</hi> <lb />Lorem
+          ipsum dolor<hi rendition="#sub">sit amet</hi> <lb />Lorem ipsum
+          dolor<hi rendition="#sup #u">sit amet</hi> <lb />Lorem ipsum dolor<hi
+            rendition="#sup #b #i"
+            >sit amet</hi
+          >
+          <lb />Lorem ipsum dolor<hi rendition="#sup #b #i">sit amet</hi>
+          <lb />Lorem ipsum<hi rendition="#g"> dolor sit </hi>amet <lb />Lorem
+          ipsum<hi rendition="#g #b"> dolor sit </hi>amet <lb />Lorem ipsum<hi
+            rendition="#g #sup"
+          >
+            dolor sit </hi
+          >amet
+        </p>
+      </div>
+
+      <!-- Foreign Language phrases -->
+      <div>
+        <h2>Foreign Language phrases</h2>
+        <p>
+          Alice Ceresa ha citato il concetto tedesco
+          <foreign xml:lang="de">Weltanschauung</foreign> nel suo saggio.
+        </p>
+      </div>
+    </body>
+  </text>
+</TEI>

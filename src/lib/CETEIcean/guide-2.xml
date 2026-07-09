@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-model
+href="https://dhbern.github.io/ceresa-oxygen-framework/tei_ceresa.rng"
+type="application/xml"
+schematypens="http://relaxng.org/ns/structure/1.0"?><?xml-model
+href="https://dhbern.github.io/ceresa-oxygen-framework/ceresa.sch"
+type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI
+  xmlns="http://www.tei-c.org/ns/1.0"
+  xml:id="A-1-b_1-1"
+  type="ceresa"
+  xml:base="https://arcipelago-ceresa.digitaleditions.ch/guide#"
+>
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Guide</title>
+        <respStmt>
+          <resp>Text encoding</resp>
+          <name />
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher />
+        <date />
+        <availability>
+          <licence target="https://creativecommons.org/licenses/by/4.0/"
+            >CC BY 4.0</licence
+          >
+        </availability>
+      </publicationStmt>
+      <notesStmt>
+        <note type="global_comment">
+          <p />
+        </note>
+      </notesStmt>
+      <sourceDesc>
+        <msDesc>
+          <msIdentifier>
+            <repository
+              >Archivio svizzero di letteratura (ASL): Lascito Alice
+              Ceresa</repository
+            >
+            <idno type="ASL">A-1-b/1-1</idno>
+          </msIdentifier>
+        </msDesc>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+      <langUsage>
+        <language ident="it" />
+      </langUsage>
+      <textClass>
+        <keywords ana="keywords">
+          <list>
+            <item />
+          </list>
+        </keywords>
+      </textClass>
+    </profileDesc>
+  </teiHeader>
+  <xi:include
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="https://dav.arcipelago-ceresa.digitaleditions.ch/data/sources/facs/A-1/A-1-b/A-1-b_1/A-1-b_1-1/A-1-b_1-1_facs.xml"
+  >
+    <xi:fallback />
+  </xi:include>
+  <text>
+    <body>
+      <!-- ######################################################### -->
+      <!-- (2) AUTHORIAL REVISIONS AND CORRECTIONS -->
+      <!-- ######################################################### -->
+      <h1>(2) Authorial Revisions and Corrections</h1>
+
+      <!-- Handshift-->
+      <div>
+        <p>
+          <lb />Lorem ipsum dolor
+          <handShift new="#hw" />
+          <lb />sit amet, consectetur
+          <handShift new="#tw" />
+          <lb />adipiscing<add place="above">elit</add>, sed do eiusmod
+          <add place="above" hand="#hw">tempor incididunt</add> ut labore et
+          dolore. <add place="above" hand="#tw">magna aliqua</add>.
+          <handShift new="#hw" />
+          <lb />Lorem ipsum dolor
+          <handShift new="#tw #person_0005" />
+          <lb />sit amet, consectetur
+          <handShift new="#hw #person_0001" />
+          <lb />adipiscing<add place="above">elit</add>, sed do eiusmod
+          <add place="above" hand="#hw">tempor incididunt</add> ut labore et
+          dolore. <add place="above" hand="#tw">magna aliqua</add>.
+        </p>
+      </div>
+
+      <!-- Additions with Place-->
+      <div>
+        <h2>Additions (above)</h2>
+        <p>
+          <lb />Lorem ipsum <add place="above">dolor sit</add> amet, consectetur
+          <add place="above" hand="#hw">adipiscing</add> elit, sed do
+          <add place="above" hand="#tw">eiusmod</add> tempor incididunt ut
+          labore et dolore magna aliqua.
+        </p>
+        <h2>Additions (below)</h2>
+        <p>
+          <lb />Lorem ipsum <add place="below">dolor sit</add> amet, consectetur
+          <add place="below" hand="#hw">adipiscing</add> elit, sed do
+          <add place="below" hand="#tw">eiusmod</add> tempor incididunt ut
+          labore et dolore magna aliqua.
+        </p>
+        <h2>Additions (inline)</h2>
+        <p>
+          <lb />Lorem ipsum <add place="inline">dolor sit</add> amet,
+          consectetur <add place="inline" hand="#hw">adipiscing</add> elit, sed
+          do <add place="inline" hand="#tw">eiusmod</add> tempor incididunt ut
+          labore et dolore magna aliqua.
+        </p>
+
+        <h2>Additions (margin)</h2>
+        <p>
+          <lb />Lorem ipsum <add place="margin">dolor sit</add> amet,
+          consectetur <add place="margin" hand="#hw">adipiscing</add> elit, sed
+          do <add place="margin" hand="#tw">eiusmod</add> tempor incididunt ut
+          labore et dolore magna aliqua.
+        </p>
+      </div>
+
+      <!-- Additions with Hand -->
+      <div>
+        <h2>Additions (above with different hands)</h2>
+        <p>
+          <lb />Lorem ipsum <add place="above">default</add> amet, consectetur
+          <add place="above" hand="#person_unknown">unknown person</add> elit,
+          sed do <add place="above" hand="#person_0005">person 0005</add> tempor
+          incididunt <add place="above" hand="#hw">handwriting</add> et
+          <add place="above" hand="#hw #person_0005"
+            >person 0005 and handwriting</add
+          >
+          dolore magna aliqua.
+        </p>
+      </div>
+
+      <!-- Deletions -->
+      <div>
+        <h2>Deletions</h2>
+        <p>
+          <lb />Lorem ipsum <del>dolor sit</del> amet, consectetur
+          <del hand="#hw">adipiscing</del> elit, sed do
+          <del hand="#tw">eiusmod</del> tempor incididunt
+          <del hand="#person_unknown">ut labore</del> et dolore magna aliqua.
+        </p>
+
+        <!-- Deletion inside an addition -->
+        <h2>Deletion inside an addition</h2>
+        <p>
+          <lb />Lorem ipsum
+          <add hand="#hw">dolor <del hand="#hw">blablabla</del> </add>sit amet.
+        </p>
+      </div>
+
+      <!-- Substitutions -->
+      <div>
+        <h2>Substitution (above)</h2>
+        <p>
+          <lb />Lorem <del hand="#hw">oppossum</del
+          ><add place="above">ipsum</add> dolor sit amet, <del>consectetur</del>
+          <add place="above" hand="#hw">adipiscing</add> elit, <del>sed do</del>
+          <add place="above" hand="#tw">eiusmod</add> tempor incididunt ut
+          labore et dolore magna aliqua.
+        </p>
+        <h2>Substitution (over)</h2>
+        <p>
+          <lb />Lorem <del>ipsum</del> <add place="over">dolor sit</add> amet,
+          <del>consectetur</del>
+          <add place="over" hand="#hw">adipiscing</add> elit, <del>sed do</del>
+          <add place="over" hand="#tw">eiusmod</add> tempor incididunt ut labore
+          et dolore magna aliqua.
+        </p>
+      </div>
+
+      <!-- Metamark (Passages the author moved) -->
+
+      <div>
+        <!-- Relocating a paragraph further down -->
+        <h2>Relocating a paragraph further down</h2>
+        <p>
+          blablabla blablabla blablabla blablabla blablabla blablabla blablabla
+          blablabla blablabla blablabla blablabla blablabla blablabla blablabla
+          blablabla
+        </p>
+        <p>
+          <metamark target="#mm1"
+            >This <add place="above">text</add> likes to
+            <hi rendition="#b">move around</hi>.</metamark
+          >
+        </p>
+        <p>
+          foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo
+          foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo
+          foofoofoo
+        </p>
+        <p>
+          <metamark xml:id="mm1" />
+        </p>
+
+        <!-- Relocating a paragraph further up -->
+        <h2>Relocating a paragraph further up</h2>
+        <p>
+          blablabla blablabla blablabla blablabla blablabla blablabla blablabla
+          blablabla blablabla blablabla blablabla blablabla blablabla blablabla
+          blablabla
+        </p>
+        <p>
+          <metamark xml:id="mm2" />
+        </p>
+        <p>
+          foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo
+          foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo
+          foofoofoo
+        </p>
+        <p>
+          <metamark target="#mm2"
+            >This <add place="above">text</add> likes to
+            <hi rendition="#b">move around</hi>.</metamark
+          >
+        </p>
+
+        <!-- Relocating a paragraph further up (with comment) -->
+        <h2>Relocating a paragraph further up (with comment)</h2>
+        <p>
+          blablabla blablabla blablabla blablabla blablabla blablabla blablabla
+          blablabla blablabla blablabla blablabla blablabla blablabla blablabla
+          blablabla
+        </p>
+        <p>
+          <metamark xml:id="mm3"
+            >There was no choice. Ceresa had to move this.</metamark
+          >
+        </p>
+        <p>
+          foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo
+          foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo foofoofoo
+          foofoofoo
+        </p>
+        <p>
+          <metamark target="#mm3"
+            >This <add place="above">text</add> likes to
+            <hi rendition="#b">move around</hi>.</metamark
+          >
+        </p>
+      </div>
+    </body>
+  </text>
+</TEI>
