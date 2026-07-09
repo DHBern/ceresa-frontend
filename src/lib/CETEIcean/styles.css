@@ -493,13 +493,13 @@ metamark {
 /* -------------------------------- */
 
 /* -------------------------------- */
-/* Editorial Supplements */
+/* Supplied */
 
-.mode-lf {
-  tei-supplied {
-    color: var(--color-muted);
-  }
+tei-supplied {
+  color: var(--color-muted);
+}
 
+.mode-df {
   tei-supplied::before {
     content: "[";
     color: var(--color-muted);
@@ -512,7 +512,7 @@ metamark {
 }
 
 /* -------------------------------- */
-/* Gaps */
+/* Gap */
 
 tei-gap {
   color: var(--color-muted);
@@ -524,7 +524,7 @@ tei-gap::before {
 }
 
 tei-gap[reason]::before {
-  content: "[" attr(reason) "]";
+  content: "[" attr(reason) ": gap of ~" attr(quantity) " characters]";
 }
 
 /* -------------------------------- */
@@ -541,7 +541,7 @@ tei-gap[reason]::before {
   }
 
   tei-unclear::after {
-    content: " [?]";
+    content: "[?]";
     color: var(--color-muted);
     font-size: 0.8em;
   }
@@ -549,8 +549,6 @@ tei-gap[reason]::before {
 
 /* -------------------------------- */
 /* Choice */
-
-/* ── LF: show regularised readings, hide diplomatic originals */
 .mode-lf {
   tei-choice > tei-sic,
   tei-choice > tei-orig,
@@ -559,47 +557,43 @@ tei-gap[reason]::before {
   }
 }
 
-/* ── DF: show striked diplomatic originals, frame regularised */
-
-/* TODO */
 .mode-df {
-  tei-choice > tei-sic,
-  tei-choice > tei-orig,
-  tei-choice > tei-abbr {
-    &::after {
-      content: "→";
-      color: var(--color-muted);
-      margin-left: 0.15em;
-      font-size: 0.85em;
-    }
-  }
-
   tei-choice > tei-corr,
   tei-choice > tei-reg,
   tei-choice > tei-expan {
-    border-bottom: 4px dotted var(--color-corr);
+    display: none;
   }
-
-  /* Colors */
-  tei-choice > tei-corr {
-    border-bottom: 4px dotted var(--color-corr);
-  }
-  tei-choice > tei-reg {
-    border-bottom: 4px dotted var(--color-reg);
-  }
-  tei-choice > tei-expan {
-    border-bottom: 4px dotted var(--color-expan);
+  tei-choice > tei-sic,
+  tei-choice > tei-orig,
+  tei-choice > tei-abbr {
+    color: var(--color-muted);
   }
   tei-choice > tei-sic {
-    border-bottom: 4px dotted var(--color-sic);
+    &::before {
+      content: "[";
+    }
+    &::after {
+      content: "]";
+    }
   }
   tei-choice > tei-orig {
-    border-bottom: 4px dotted var(--color-orig);
+    &::before {
+      content: "[";
+    }
+    &::after {
+      content: "]";
+    }
   }
   tei-choice > tei-abbr {
-    border-bottom: 4px dotted var(--color-abbr);
+    &::before {
+      content: "[";
+    }
+    &::after {
+      content: "]";
+    }
   }
 }
+
 
 /* -------------------------------- */
 /* (4) EDITORIAL COMMENTARY */
