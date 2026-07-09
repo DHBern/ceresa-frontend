@@ -383,13 +383,14 @@ tei-hi[rendition~="#g"] {
 
   [hand*="#person"] {
     color: var(--color-tw);
-
-    &::after {
-      content: "✍ hand: (" attr(hand) ")";
-      color: black;
-      font-size: 0.7em;
-      font-family: monospace;
-    }
+  }
+  tei-add[hand*="#person"]::after,
+  tei-del[hand*="#person"]::after,
+  tei-p[hand*="#person"]::after {
+    content: "✍ handd: (" attr(hand) ")";
+    color: black;
+    font-size: 0.7em;
+    font-family: monospace;
   }
 }
 
@@ -593,7 +594,6 @@ tei-gap[reason]::before {
     }
   }
 }
-
 
 /* -------------------------------- */
 /* (4) EDITORIAL COMMENTARY */
