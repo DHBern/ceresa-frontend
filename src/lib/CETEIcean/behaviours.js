@@ -53,6 +53,43 @@ var teiBehaviors = {
       return wrapper;
     },
 
+    /* Hand Shift */
+    handShift: function (elt) {
+      var newHand = elt.getAttribute("new");
+
+      var wrapper = document.createElement("span");
+      wrapper.setAttribute('data-name', "handShift");
+      wrapper.setAttribute('data-hand', newHand);
+
+      var next = elt.nextSibling;
+      var wrappedAny = false;
+
+      // Iterate through subsequent siblings
+      while (next) {
+        // Stop if we encounter another handShift
+        if (
+          next.nodeType === 1 &&
+          next.getAttribute("data-origname") === "handShift"
+        ) {
+          break;
+        }
+
+        var tempNext = next.nextSibling;
+        wrapper.appendChild(next); // Moves 'next' into 'wrapper'
+        wrappedAny = true;
+        next = tempNext;
+      }
+
+      if (wrappedAny) {
+        // Insert the wrapper immediately after the original handShift element
+        elt.parentNode.insertBefore(wrapper, elt.nextSibling);
+      }
+
+      // Do NOT return anything. We modified the DOM manually.
+      // If we return a node, CETEIcean will try to wrap our changes again.
+      return undefined;
+    },
+
     /* Hide teiHeader */
     teiHeader: function (e) {
       this.hideContent(e, false);

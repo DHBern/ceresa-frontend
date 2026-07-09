@@ -35,9 +35,8 @@
   /* Editorial colours */
   --color-add: #2d8a2d;
   --color-del: #b91c1c;
-  --color-hw: #1d6fa4;
-  --color-tw-add: #2d8a2d;
-  --color-tw-del: #b91c1c;
+  --color-hw: #3868c9;
+  --color-tw: #b138c9;
   --color-subst-bg: #fffbe6;
   --color-supplied-bg: #eeeeee;
   --color-unclear-border: #92400e;
@@ -200,26 +199,6 @@ tei-p {
         text-align: right;
       }
     }
-  }
-}
-
-/* -------------------------------- */
-/* Medium (handShift) */
-
-.mode-lf {
-  tei-handshift {
-    display: none;
-  }
-}
-.mode-df {
-  tei-handshift {
-    display: inline;
-    color: var(--color-muted);
-    font-size: 0.8em;
-  }
-
-  tei-handshift::before {
-    content: "✍ ";
   }
 }
 
@@ -395,27 +374,46 @@ tei-hi[rendition~="#g"] {
 
 /* Hand */
 .mode-df {
-  [hand="#hw"] {
+  [hand*="#hw"] {
     color: var(--color-hw);
   }
-  [hand="#tw"] {
+  [hand*="#tw"] {
     color: var(--color-tw);
   }
 
-  /* [hand^="#person"] {
-    color: var(--color-tw)
+  [hand*="#person"] {
+    color: var(--color-tw);
+
+    &::after {
+      content: "✍ hand: (" attr(hand) ")";
+      color: black;
+      font-size: 0.7em;
+      font-family: monospace;
+    }
   }
-  [hand^="#person"]::after {
-    content: 'hand by: ' attr(hand) '';
-    display: inline-block;
-    position: relative; 
-    background-color: lightgreen;
-    border: 2px solid black;
-    border-radius: 100px;
-    padding: 2px 6px;
-    margin-left: 4px;
-    top: -2px;
-  } */
+}
+
+/* -------------------------------- */
+/* Medium (handShift) */
+
+.mode-df {
+  tei-handshift {
+    display: inline;
+  }
+
+  span[data-name="handShift"][data-hand*="#hw"] {
+    color: var(--color-hw);
+  }
+
+  span[data-name="handShift"][data-hand*="#tw"] {
+    color: var(--color-tw);
+  }
+  span[data-name="handShift"][data-hand*="#person"]::before {
+    content: "✍ change of hand: (" attr(data-hand) ")";
+    color: black;
+    font-size: 0.7em;
+    font-family: monospace;
+  }
 }
 
 /* Additions and Deletions */
