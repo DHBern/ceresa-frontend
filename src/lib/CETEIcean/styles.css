@@ -450,40 +450,43 @@ metamark {
   display: none;
 }
 
-/* Mode-Draft: Show original text and marker */
-.mode-df .metamark-relocated-text-at-original-position {
-  display: inline;
-}
-.mode-df .metamark-marker-at-new-location {
-  display: inline-block;
-  color: #6d4aff;
-  font-weight: bold;
-  margin-left: 4px;
-}
-.mode-df .metamark-marker-at-new-location::before {
-  content: "○ (" attr(id) ")";
-}
-.mode-df .metamark-relocated-text-at-original-position::after {
-  content: "(" attr(id) ")";
-  color: #6d4aff;
-  font-weight: bold;
-  margin-left: 4px;
-}
-.mode-df .metamark-relocated-text-at-new-location {
-  display: none;
-}
-
-/* Mode-Linear: Hide original, show relocated text, hide marker */
-.mode-lf .metamark-relocated-text-at-original-position {
-  display: none;
-}
-.mode-lf .metamark-marker-at-new-location {
-  display: none;
-}
-.mode-lf .metamark-relocated-text-at-new-location {
-  display: inline;
+/* DF: Show original text and marker */
+.mode-df {
+  .metamark-relocated-text-at-original-position {
+    display: inline;
+  }
+  .metamark-marker-at-new-location {
+    display: inline-block;
+    color: #6d4aff;
+    font-weight: bold;
+    margin-left: 4px;
+  }
+  .metamark-marker-at-new-location::before {
+    content: "○ (" attr(id) ")";
+  }
+  .metamark-relocated-text-at-original-position::after {
+    content: "(" attr(id) ")";
+    color: #6d4aff;
+    font-weight: bold;
+    margin-left: 4px;
+  }
+  .metamark-relocated-text-at-new-location {
+    display: none;
+  }
 }
 
+/* LF: Hide original, show relocated text, hide marker */
+.mode-lf {
+  .metamark-relocated-text-at-original-position {
+    display: none;
+  }
+  .metamark-marker-at-new-location {
+    display: none;
+  }
+  .metamark-relocated-text-at-new-location {
+    display: inline;
+  }
+}
 
 /* -------------------------------- */
 /* (3) EDITORIAL DECISIONS */
