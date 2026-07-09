@@ -14,12 +14,50 @@
    ──────────────────────────────────────────────────────────────── */
 var teiBehaviors = {
   tei: {
+    /* Additions */
+    add: function (elt) {
+      var place = elt.getAttribute("place");
+      let wrapper = document.createElement("span");
+      switch (place) {
+        case "above":
+          wrapper.innerHTML =
+            "<span class='addition_wrapper'>⌜</span>" +
+            elt.textContent +
+            "<span class='addition_wrapper'>⌝</span>";
+          break;
+        case "below":
+          wrapper.innerHTML =
+            "<span class='addition_wrapper'>⌞</span>" +
+            elt.textContent +
+            "<span class='addition_wrapper'>⌟</span>";
+          break;
+        case "inline":
+          wrapper.innerHTML =
+            "<span class='addition_wrapper'>⌜</span>" +
+            elt.textContent +
+            "<span class='addition_wrapper'>⌟</span>";
+          break;
+        case "over":
+          wrapper.innerHTML =
+            "<span class='addition_wrapper'>{</span>" +
+            elt.textContent +
+            "<span class='addition_wrapper'>}</span>";
+          break;
+        case "margin":
+          wrapper.innerHTML =
+            "<span class='addition_wrapper'>‹</span>" +
+            elt.textContent +
+            "<span class='addition_wrapper'>›</span>";
+          break;
+      }
+      return wrapper;
+    },
 
     /* Hide teiHeader */
     teiHeader: function (e) {
       this.hideContent(e, false);
     },
-    
+
     /* Set document title from titleStmt */
     title: [
       [
@@ -156,7 +194,7 @@ var teiBehaviors = {
       }
       return div;
     },
-    
+
     /* Figures */
     figure: function (elt) {
       var doc = elt.ownerDocument,
@@ -217,7 +255,6 @@ var teiBehaviors = {
   },
   functions: {},
 };
-
 
 /* ══════════════════════════════════════════════════════════════════
    App Logic
@@ -337,7 +374,7 @@ var teiBehaviors = {
       processHyphens();
     });
   }
-  
+
   /* ── Init ───────────────────────────────────────────────────── */
   function init() {
     var url = getParam("url");

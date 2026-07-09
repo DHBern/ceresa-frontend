@@ -418,70 +418,25 @@ tei-hi[rendition~="#g"] {
   } */
 }
 
-/* Substitutions, Additions and Deletions */
-
+/* Additions and Deletions */
 .mode-df {
-  /* addition inline */
-  tei-add[place="inline"]:before {
-    content: "⌜";
-  }
-  tei-add[place="inline"]:after {
-    content: "⌟";
-  }
-
-  /* addition margin */
-  tei-add[place="margin"]:before {
-    content: "‹";
-  }
-  tei-add[place="margin"]:after {
-    content: "›";
-  }
-  /* addition above */
   tei-add[place="above"] {
     vertical-align: super;
   }
-  tei-add[place="above"]:before {
-    content: "⌜";
-  }
-  tei-add[place="above"]:after {
-    content: "⌝";
-  }
-  /* addition below */
   tei-add[place="below"] {
     vertical-align: sub;
   }
-  tei-add[place="below"]:before {
-    content: "⌞";
-  }
-  tei-add[place="below"]:after {
-    content: "⌟";
-  }
-  /* substitution */
   tei-del {
     text-decoration: line-through;
-  }
-  tei-add[place="over"]:before {
-    content: "{";
-  }
-  tei-add[place="over"]:after {
-    content: "}";
   }
 }
 
 .mode-lf {
-  tei-subst {
-    display: inline;
-  }
-
-  tei-del,
-  tei-subst > tei-del {
+  tei-add span.addition_wrapper {
     display: none;
   }
-
-  tei-add,
-  tei-subst > tei-add {
-    display: inline;
-    color: inherit;
+  tei-del {
+    display: none;
   }
 }
 
