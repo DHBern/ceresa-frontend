@@ -387,7 +387,7 @@ tei-hi[rendition~="#g"] {
   tei-add[hand*="#person"]::after,
   tei-del[hand*="#person"]::after,
   tei-p[hand*="#person"]::after {
-    content: "✍ handd: (" attr(hand) ")";
+    content: "✍ hand: (" attr(hand) ")";
     color: black;
     font-size: 0.7em;
     font-family: monospace;
