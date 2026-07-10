@@ -148,9 +148,12 @@ tei-p {
 /* -------------------------------- */
 /* Linebreaks and Hyphens */
 .mode-df {
-  tei-lb:not(:first-child):after {
+  tei-lb::after {
     content: "\a";
     white-space: pre;
+  }
+  tei-p > tei-lb:first-child::after {
+    content: "";
   }
 }
 
