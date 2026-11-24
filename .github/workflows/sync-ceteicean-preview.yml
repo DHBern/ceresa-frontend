@@ -34,9 +34,9 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      # - name: Exit early if no relevant changes
-      #   if: steps.changes.outputs.changed == 'false'
-      #   run: echo "No changes in src/lib/CETEIcean — skipping sync."
+      - name: Exit early if no relevant changes
+        if: steps.changes.outputs.changed == 'false'
+        run: echo "No changes in src/lib/CETEIcean — skipping sync."
 
       - name: Install rclone
         if: steps.changes.outputs.changed == 'true'

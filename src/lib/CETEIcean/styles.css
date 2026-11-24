@@ -433,20 +433,23 @@ tei-hi[rendition~='#g'] {
 	tei-del {
 		text-decoration: line-through;
 		text-decoration-thickness: 0.2rem;
-		&[hand='#hw'] {
-			text-decoration-color: var(--color-correction-hw);
-		}
-		&[hand='#tw'] {
-			text-decoration-color: var(--color-correction-tw);
-		}
 	}
-	tei-add {
-		&[hand='#hw'] {
-			color: var(--color-correction-hw);
-		}
-		&[hand='#tw'] {
-			color: var(--color-correction-tw);
-		}
+
+	tei-del[hand='#hw'],
+	tei-text[data-default-hand='#hw'] tei-del:not([hand]) {
+		text-decoration-color: var(--color-correction-hw);
+	}
+	tei-del[hand='#tw'],
+	tei-text[data-default-hand='#tw'] tei-del:not([hand]) {
+		text-decoration-color: var(--color-correction-tw);
+	}
+	tei-add[hand='#hw'],
+	tei-text[data-default-hand='#hw'] tei-add:not([hand]) {
+		color: var(--color-correction-hw);
+	}
+	tei-add[hand='#tw'],
+	tei-text[data-default-hand='#tw'] tei-add:not([hand]) {
+		color: var(--color-correction-tw);
 	}
 }
 
@@ -647,76 +650,75 @@ span.note-mark.active {
 }
 
 /* -------------------------------- */
-/* Annotations */
+/* Comments / Footnotes */
 
-.mode-lf {
-	tei-text span.footnote {
-		cursor: pointer;
-		border: 1px solid var(--color-footnote-circle);
-		margin-right: 5px;
-		padding: 2px 7px;
-		border-radius: 100%;
-		font-size: 1.1rem;
-	}
-
-	tei-text span.footnote[data-note-type='annotation'] {
-		display: none;
-	}
-
-	span.footnote:not([data-note-type='annotation']):hover,
-	span.footnote:not([data-note-type='annotation']).note-pair-hovered,
-	span.footnote:not([data-note-type='annotation']).active,
-	span.note-mark:hover,
-	span.note-mark.active {
-		background-color: var(--color-note-active);
-		color: var(--color-note-active-foreground);
-	}
-
-	span.footnote:not([data-note-type='annotation']):active,
-	span.note-mark:active {
-		background-color: var(--color-dark-40);
-		box-shadow: none;
-	}
-	span.footnote:not([data-note-type='annotation']).active:focus,
-	span.note-mark.active:focus {
-		border: none;
-		box-shadow: none;
-	}
+.mode-lf tei-text span.footnote[data-note-type='annotation'],
+.mode-lf tei-note[type='annotation'] {
+	display: none;
 }
 
-.mode-lf {
+.hide-comments {
+	tei-text span.footnote[data-note-type='annotation'],
 	tei-note[type='annotation'] {
 		display: none;
+		@apply pointer-events-none;
 	}
 }
 
-.mode-df {
-	tei-text span.footnote[data-note-type='annotation'] {
-		cursor: pointer;
-		border: 1px solid var(--color-footnote-circle);
-		margin-right: 5px;
-		padding: 2px 7px;
-		border-radius: 100%;
-		font-size: 1.1rem;
+.show-comments {
+	.mode-lf {
+		tei-text span.footnote {
+			cursor: pointer;
+			border: 1px solid var(--color-footnote-circle);
+			margin-right: 5px;
+			padding: 2px 7px;
+			border-radius: 100%;
+			font-size: 1.1rem;
+		}
+
+		span.footnote:not([data-note-type='annotation']):hover,
+		span.footnote:not([data-note-type='annotation']).note-pair-hovered,
+		span.footnote:not([data-note-type='annotation']).active,
+		span.note-mark:hover,
+		span.note-mark.active {
+			background-color: var(--color-note-active);
+			color: var(--color-note-active-foreground);
+		}
+
+		span.footnote:not([data-note-type='annotation']):active,
+		span.note-mark:active {
+			background-color: var(--color-dark-40);
+			box-shadow: none;
+		}
+		span.footnote:not([data-note-type='annotation']).active:focus,
+		span.note-mark.active:focus {
+			border: none;
+			box-shadow: none;
+		}
 	}
 
-	span.footnote[data-note-type='annotation']:hover,
-	span.footnote[data-note-type='annotation'].note-pair-hovered,
-	span.footnote[data-note-type='annotation'].active {
-		background-color: var(--color-note-active);
-		color: var(--color-note-active-foreground);
-	}
+	.mode-df {
+		tei-text span.footnote[data-note-type='annotation'] {
+			cursor: pointer;
+			border: 1px solid var(--color-footnote-circle);
+			margin-right: 5px;
+			padding: 2px 7px;
+			border-radius: 100%;
+			font-size: 1.1rem;
+		}
 
-	span.footnote[data-note-type='annotation']:active {
-		background-color: var(--color-dark-40);
-		box-shadow: none;
-	}
-}
+		span.footnote[data-note-type='annotation']:hover,
+		span.footnote[data-note-type='annotation'].note-pair-hovered,
+		span.footnote[data-note-type='annotation'].active {
+			background-color: var(--color-note-active);
+			color: var(--color-note-active-foreground);
+		}
 
-/* -------------------------------- */
-/* Hidden Notes */
-tei-note[type='hidden'] {
-	display: none;
+		span.footnote[data-note-type='annotation']:active {
+			background-color: var(--color-dark-40);
+			box-shadow: none;
+		}
+	}
 }
 /* -------------------------------- */
 /* Anchors */
@@ -729,75 +731,81 @@ tei-anchor {
 /* -------------------------------- */
 
 /* -------------------------------- */
-/* Referencing Strings */
+/* Semantic Annotation with reference-strings */
 
-[data-textflow='fluid'],
-.mode-lf,
-.mode-df {
-	/* Hover and Active */
-	tei-rs:hover,
-	tei-rs.active,
-	tei-rs.active:hover,
-	tei-rs:active {
-		background-color: var(--color-dark-40);
-		box-shadow: none;
-		&[type='person'] {
-			background-color: var(--color-rs-person);
-			color: white;
-		}
-		&[type='place'] {
-			background-color: var(--color-rs-place);
-			color: white;
-		}
-		&[type='org'] {
-			background-color: var(--color-rs-org);
-			color: white;
-		}
-		&[type='work'] {
-			background-color: var(--color-rs-work);
-			color: white;
-		}
-		&[type='work'] {
-			background-color: var(--color-rs-work);
-			color: white;
-		}
-	}
-	tei-rs.active:focus {
-		border: none;
-		box-shadow: none;
-	}
+.hide-annotations tei-rs {
+	@apply pointer-events-none;
 }
 
-/* Types */
-[data-textflow='fluid'],
-.mode-lf,
-.mode-df {
-	tei-rs {
-		cursor: pointer;
-		border-bottom-width: 3px;
-		border-bottom-style: solid;
-		border-bottom-color: var(--color-background-contrast);
+.show-annotations {
+	[data-textflow='fluid'],
+	.mode-lf,
+	.mode-df {
+		/* Hover and Active */
+		tei-rs:hover,
+		tei-rs.active,
+		tei-rs.active:hover,
+		tei-rs:active {
+			background-color: var(--color-dark-40);
+			box-shadow: none;
+			&[type='person'] {
+				background-color: var(--color-rs-person);
+				color: white;
+			}
+			&[type='place'] {
+				background-color: var(--color-rs-place);
+				color: white;
+			}
+			&[type='org'] {
+				background-color: var(--color-rs-org);
+				color: white;
+			}
+			&[type='work'] {
+				background-color: var(--color-rs-work);
+				color: white;
+			}
+			&[type='work'] {
+				background-color: var(--color-rs-work);
+				color: white;
+			}
+		}
+		tei-rs.active:focus {
+			border: none;
+			box-shadow: none;
+		}
+	}
 
-		&[type='smallform'],
-		&[type='longform'],
-		&[type='letter'],
-		&[type='image'] {
-			border-bottom-color: var(--color-rs-doc);
-		}
-		&[type='person'] {
-			border-bottom-color: var(--color-rs-person);
-		}
-		&[type='place'] {
-			border-bottom-color: var(--color-rs-place);
-		}
-		&[type='org'] {
-			border-bottom-color: var(--color-rs-org);
-		}
-		&[type='work'] {
-			border-bottom-color: var(--color-rs-work);
-		}
-		&[type='work'] {
-			border-bottom-color: var(--color-rs-work);
+	/* Types */
+	[data-textflow='fluid'],
+	.mode-lf,
+	.mode-df {
+		tei-rs {
+			cursor: pointer;
+			border-bottom-width: 3px;
+			border-bottom-style: solid;
+			border-bottom-color: var(--color-background-contrast);
+
+			&[type='smallform'],
+			&[type='longform'],
+			&[type='letter'],
+			&[type='image'] {
+				border-bottom-color: var(--color-rs-doc);
+			}
+			&[type='person'] {
+				border-bottom-color: var(--color-rs-person);
+			}
+			&[type='place'] {
+				border-bottom-color: var(--color-rs-place);
+			}
+			&[type='org'] {
+				border-bottom-color: var(--color-rs-org);
+			}
+			&[type='work'] {
+				border-bottom-color: var(--color-rs-work);
+			}
+			&[type='work'] {
+				border-bottom-color: var(--color-rs-work);
+			}
 		}
 	}
 }

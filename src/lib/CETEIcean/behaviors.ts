@@ -7,12 +7,32 @@ interface BehaviorContext {
 	noteIndex?: number;
 }
 
+export function applyDefaultHand(xmlDoc: Document, container: ParentNode) {
+	const teiNamespace = 'http://www.tei-c.org/ns/1.0';
+	const xmlNamespace = 'http://www.w3.org/XML/1998/namespace';
+	const header = xmlDoc.getElementsByTagNameNS(teiNamespace, 'teiHeader')[0];
+	if (!header) return;
+
+	const hands = Array.from(header.getElementsByTagNameNS(teiNamespace, 'handNote')).filter(
+		(note) =>
+			note.parentElement?.localName === 'handDesc' &&
+			note.getAttribute('scope') === 'major' &&
+			['hw', 'tw'].includes(note.getAttributeNS(xmlNamespace, 'id') ?? '')
+	);
+	if (hands.length > 1) throw new Error('Multiple default TEI hands are declared.');
+	if (!hands.length) return;
+
+	const text = container.querySelector('tei-text');
+	if (!text) throw new Error('Cannot apply the default hand: rendered TEI text not found.');
+	text.setAttribute('data-default-hand', `#${hands[0].getAttributeNS(xmlNamespace, 'id')}`);
+}
+
 export const behaviors = (dom: Document) => {
 	return {
 		tei: {
 			add: markAddition,
 
-			gap(this: BehaviorContext, el: HTMLElement): Text {	
+			gap(this: BehaviorContext, el: HTMLElement): Text {
 				const quantity = Number.parseInt(el.getAttribute('quantity') ?? '0', 10);
 				const count = Number.isFinite(quantity) ? Math.max(0, quantity) : 0;
 				return dom.createTextNode('x'.repeat(count));

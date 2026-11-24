@@ -16,3 +16,10 @@ WebDAV. No companion behavior JavaScript file is required. Add
 `&version=<xml:id>` alongside `url` to render only the matching TEI division
 (for example, `oxy.html?url=<encoded-TEI-URL>&version=A-1-b_6-2_AC001_a`);
 without it, the full document is shown.
+
+# Correction hands
+
+Declare `hw` and `tw` in `teiHeader/fileDesc/sourceDesc/msDesc/physDesc/handDesc`.
+Mark the document's base hand with `scope="major"` on its `handNote`; leave both
+unmarked when the base hand is unknown. In diplomatic view, additions and deletions
+without `@hand` use this base hand, while explicit `@hand` values take precedence.
