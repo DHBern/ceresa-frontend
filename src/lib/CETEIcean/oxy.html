@@ -1,80 +1,407 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
 
-<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta charset="UTF-8">
+		<title>TEI Preview – Ceresa</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
 
-  <title>TEI Preview – Ceresa</title>
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link
+			href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Fira+Code:wght@400;500&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="./ui-styles.css" />
+		<link rel="stylesheet" href="./styles.css" />
+	</head>
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<body>
+		<header id="header">
+			<h1>TEI Preview</h1>
 
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+			<span class="filename" id="filename"></span>
 
-  <link rel="stylesheet" href="ui-styles.css">
+			<div class="mode-toggle" id="mode-toggle">
+				<button type="button" class="toggle-btn active" id="btn-lf" aria-pressed="true">
+					Lesefassung
+				</button>
 
-  <link rel="stylesheet" href="styles.css">
+				<button type="button" class="toggle-btn" id="btn-df" aria-pressed="false">
+					Diplomatische Fassung
+				</button>
+			</div>
+		</header>
 
-</head>
+		<main id="TEI" aria-live="polite">
+			<p id="status" class="placeholder">No TEI file specified.</p>
+			<div id="reading-view" class="mode-lf" data-textflow="fluid" hidden></div>
+			<div id="diplomatic-view" class="mode-df" data-textflow="fluid" hidden></div>
+		</main>
 
-<body class="mode-lf">
+		<section id="endnotes" hidden>
+			<hr />
+			<h2>Notes</h2>
+		</section>
 
+		<footer>
+			Rendered with
+			<a href="https://github.com/TEIC/CETEIcean" target="_blank" rel="noopener">CETEIcean</a>
+		</footer>
 
+		<script src="https://github.com/TEIC/CETEIcean/releases/download/v1.9.5/CETEI.js"></script>
+		<script>
+			const TEI_NS = 'http://www.tei-c.org/ns/1.0';
+			const XML_NS = 'http://www.w3.org/XML/1998/namespace';
+			const NOTE_ID_PREFIX = 'note_';
 
-  <header id="header">
+			function selectTEIVersion(doc, id) {
+				const matches = Array.from(doc.getElementsByTagNameNS(TEI_NS, 'div')).filter(
+					(division) => division.getAttributeNS(XML_NS, 'id') === id
+				);
+				if (matches.length !== 1) {
+					throw new Error(
+						`Expected one TEI division with xml:id="${id}", found ${matches.length}.`
+					);
+				}
 
-    <h1>TEI Preview</h1>
+				const division = matches[0];
+				let text = division.parentElement;
+				while (text && !(text.namespaceURI === TEI_NS && text.localName === 'text')) {
+					text = text.parentElement;
+				}
+				if (!text) throw new Error(`TEI division "${id}" is not inside a text.`);
 
-    <span class="filename" id="filename"></span>
+				const pageBreaks = Array.from(text.getElementsByTagNameNS(TEI_NS, 'pb'));
+				const inside = pageBreaks.filter((pb) => division.contains(pb));
+				const preceding = pageBreaks.filter(
+					(pb) => !division.contains(pb) && (pb.compareDocumentPosition(division) & 4) !== 0
+				);
+				const firstBreak = inside[0];
+				const range = doc.createRange();
+				range.selectNodeContents(division);
+				if (firstBreak) range.setEndBefore(firstBreak);
+				const beforeFirstBreak = range.cloneContents();
+				const hasInitialContent =
+					Boolean(beforeFirstBreak.textContent?.trim()) ||
+					Array.from(beforeFirstBreak.querySelectorAll('*')).some((element) =>
+						['lb', 'gap', 'space', 'graphic', 'figure', 'note'].includes(element.localName)
+					);
 
-    <div class="mode-toggle" id="mode-toggle">
+				let initialPage = null;
+				if (hasInitialContent) {
+					const previousBreak = preceding[preceding.length - 1];
+					if (previousBreak) {
+						initialPage = {
+							n: previousBreak.getAttribute('n'),
+							facs: previousBreak.getAttribute('facs')
+						};
+					} else {
+						console.warn(`No preceding page break for the beginning of TEI version "${id}".`);
+						initialPage = { n: null, facs: null };
+					}
+				}
 
-      <button type="button" class="toggle-btn active" id="btn-lf" aria-pressed="true">Lesefassung</button>
+				for (let child = division; child !== text;) {
+					const parent = child.parentElement;
+					if (!parent) throw new Error(`Could not isolate TEI division "${id}".`);
+					for (const sibling of Array.from(parent.childNodes)) {
+						if (sibling !== child) sibling.remove();
+					}
+					child = parent;
+				}
 
-      <button type="button" class="toggle-btn" id="btn-df" aria-pressed="false">Diplomatische Fassung</button>
+				return { id, initialPage, pageBreakCount: inside.length };
+			}
 
-    </div>
+			function getTextPageBreaks(container) {
+				return Array.from(container.querySelectorAll('tei-text tei-pb')).filter(
+					(element) => !element.closest('cetei-original')
+				);
+			}
 
-  </header>
+			function markAddition(addition) {
+				if (addition.querySelector(':scope > .addition_wrapper')) return;
 
+				const upperBrackets = ['⌜', '⌝'];
+				const bracketsByPlace = new Map([
+					['above', upperBrackets],
+					['below', ['⌞', '⌟']],
+					['inline', ['⌜', '⌟']],
+					['over', ['{', '}']],
+					['margin', ['‹', '›']]
+				]);
+				const place = addition.getAttribute('place') ?? '';
+				const deleted = addition.closest('tei-del') !== null;
+				const brackets =
+					deleted && place === 'inline'
+						? upperBrackets
+						: (bracketsByPlace.get(place) ?? (deleted ? upperBrackets : undefined));
+				if (!brackets) return;
 
+				const [start, end] = brackets.map((glyph) => {
+					const marker = addition.ownerDocument.createElement('span');
+					marker.className = 'addition_wrapper';
+					marker.textContent = glyph;
+					return marker;
+				});
+				const firstContent = Array.from(addition.childNodes).find(
+					(node) => node.nodeType === 1 || (node.nodeType === 3 && node.textContent?.trim())
+				);
+				if (place === 'margin' && firstContent?.nodeName.toLowerCase() === 'tei-lb') {
+					firstContent.after(start);
+				} else {
+					addition.prepend(start);
+				}
+				addition.append(end);
+			}
 
-  <main id="TEI">
+			function behaviors(dom) {
+				return {
+					tei: {
+						add: markAddition,
 
-    <p class="placeholder">No TEI file specified.</p>
+						gap(el) {
+							const quantity = Number.parseInt(el.getAttribute('quantity') ?? '0', 10);
+							const count = Number.isFinite(quantity) ? Math.max(0, quantity) : 0;
+							return dom.createTextNode('x'.repeat(count));
+						},
 
-  </main>
+						lb(el) {
+							if (el.getAttribute('break') !== 'no') return;
 
+							const prev = el.previousSibling;
+							if (prev && prev.nodeType === 3) {
+								prev.nodeValue = prev.nodeValue ? prev.nodeValue.replace(/\s+$/, '') : null;
+								const hyphenSpan = dom.createElement('span');
+								hyphenSpan.setAttribute('data-type', 'hyphen');
+								hyphenSpan.textContent = '-';
+								prev.parentNode?.insertBefore(hyphenSpan, el);
+							}
+							return dom.createTextNode('');
+						},
 
+						note(el) {
+							if (!this.noteIndex) this.noteIndex = 1;
+							else this.noteIndex++;
 
-  <section id="endnotes" hidden>
+							const noteId = `${NOTE_ID_PREFIX}${this.noteIndex}`;
+							let noteList = this.dom.querySelector('ol.notes');
+							if (!noteList) {
+								noteList = dom.createElement('ol');
+								noteList.setAttribute('class', 'notes');
+								this.dom.appendChild(noteList);
+							}
 
-    <hr><h2>Notes</h2>
+							const note = dom.createElement('li');
+							note.setAttribute('data-noteid', noteId);
+							note.innerHTML = `<div class='data-notenum'>${this.noteIndex}</div><div>${el.innerHTML}</div>`;
+							noteList.appendChild(note);
 
-    <ol id="endnote-list"></ol>
+							const footnote = dom.createElement('span');
+							footnote.classList.add('footnote');
+							footnote.setAttribute('data-noteid', noteId);
+							const noteType = el.getAttribute('type');
+							if (noteType) footnote.setAttribute('data-note-type', noteType);
+							footnote.dataset.noteId = String(this.noteIndex);
+							footnote.innerHTML = String(this.noteIndex);
+							return footnote;
+						}
+					}
+				};
+			}
 
-  </section>
+			function wrapAnnotations(container) {
+				const notes = container.querySelectorAll('tei-note[targetend]');
+				notes.forEach((note) => {
+					const targetId = note.getAttribute('targetend');
+					const noteId = note.querySelector(':scope > .footnote')?.getAttribute('data-noteid');
+					if (!targetId || !noteId) return;
+					const anchor = container.querySelector(`tei-anchor[id="${targetId}"]`);
+					if (!anchor) return;
 
+					let current = anchor.nextSibling;
+					const nodes = [];
+					while (current && current !== note) {
+						nodes.push(current);
+						current = current.nextSibling;
+					}
+					if (current !== note || !nodes.length) return;
 
+					const wrapper = container.ownerDocument.createElement('span');
+					wrapper.classList.add('note-mark');
+					wrapper.setAttribute('data-noteid', noteId);
+					wrapper.dataset.noteTarget = targetId;
+					nodes[0].parentNode.insertBefore(wrapper, nodes[0]);
+					nodes.forEach((node) => wrapper.appendChild(node));
+				});
+			}
 
-  <footer>
+			function processMetamarks(root) {
+				const marks = Array.from(
+					root.querySelectorAll('tei-metamark, metamark, [data-origname="metamark"]')
+				);
+				const destinations = new Map();
+				for (const mark of marks) {
+					const id = mark.getAttribute('xml:id') || mark.id;
+					if (id && !destinations.has(id)) destinations.set(id, mark);
+				}
 
-    Rendered with <a href="https://github.com/TEIC/CETEIcean" target="_blank" rel="noopener">CETEIcean</a>
+				let moveNumber = root.querySelectorAll('.metamark-marker-at-new-location').length;
+				for (const origin of marks) {
+					if (origin.hasAttribute('xml:id') || origin.id) continue;
+					const id = origin.getAttribute('target')?.replace(/^#/, '');
+					if (!id) continue;
+					const destination = destinations.get(id);
+					if (!destination || !origin.hasChildNodes()) continue;
+					if (destination.querySelector(':scope > .metamark-marker-at-new-location')) continue;
 
-  </footer>
+					const labelOrigin = `Testo riposizionato ${++moveNumber}`;
+					const labelDestination = `${moveNumber}`;
+					origin.dataset.metamarkLabel = labelOrigin;
+					destination.dataset.metamarkLabel = labelDestination;
+					const doc = origin.ownerDocument;
+					const originalText = doc.createElement('span');
+					originalText.className = 'metamark-relocated-text-at-original-position';
+					originalText.dataset.metamarkId = id;
+					originalText.dataset.metamarkLabel = labelOrigin;
+					originalText.append(...origin.childNodes);
 
+					const relocatedText = doc.createElement('span');
+					relocatedText.className = 'metamark-relocated-text-at-new-location';
+					for (const child of originalText.childNodes) {
+						relocatedText.append(child.cloneNode(true));
+					}
 
+					const explanation = doc.createElement('span');
+					explanation.className = 'metamark-explanation-for-relocation';
+					explanation.append(...destination.childNodes);
 
-  <script src="https://github.com/TEIC/CETEIcean/releases/download/v1.9.5/CETEI.js"></script>
+					const marker = doc.createElement('span');
+					marker.className = 'metamark-marker-at-new-location';
+					marker.dataset.metamarkId = id;
+					marker.dataset.metamarkLabel = labelDestination;
+					const tooltip = explanation.textContent.trim();
+					if (tooltip) {
+						for (const element of [marker, originalText]) {
+							element.title = tooltip;
+							element.style.cursor = 'help';
+						}
+					}
+					destination.append(explanation, marker, relocatedText);
+					origin.append(originalText);
+				}
+			}
 
-  <script src="behaviours.js"></script>
-  <script src="metamarks.js"></script>
+			const readingView = document.getElementById('reading-view');
+			const diplomaticView = document.getElementById('diplomatic-view');
+			const status = document.getElementById('status');
+			const filename = document.getElementById('filename');
+			const endnotes = document.getElementById('endnotes');
+			const readingButton = document.getElementById('btn-lf');
+			const diplomaticButton = document.getElementById('btn-df');
+			let currentMode = 'lf';
 
-</body>
+			function setMode(mode) {
+				const target = mode === 'lf' ? readingView : diplomaticView;
+				const source = mode === 'lf' ? diplomaticView : readingView;
+				if (currentMode !== mode) target.replaceChildren(...Array.from(source.childNodes));
 
+				readingView.hidden = mode !== 'lf';
+				diplomaticView.hidden = mode !== 'df';
+				readingButton.classList.toggle('active', mode === 'lf');
+				diplomaticButton.classList.toggle('active', mode === 'df');
+				readingButton.setAttribute('aria-pressed', String(mode === 'lf'));
+				diplomaticButton.setAttribute('aria-pressed', String(mode === 'df'));
+				document.body.className = `mode-${mode}`;
+				currentMode = mode;
+			}
+
+			async function loadTEI(source) {
+				const response = await fetch(source);
+				if (!response.ok) {
+					throw new Error(`The TEI request failed (${response.status} ${response.statusText}).`);
+				}
+				const xmlText = await response.text();
+				const xmlDocument = new DOMParser().parseFromString(xmlText, 'text/xml');
+				if (xmlDocument.getElementsByTagName('parsererror').length) {
+					throw new Error('The requested document is not well-formed XML.');
+				}
+				const versionId = new URLSearchParams(window.location.search).get('version')?.trim();
+				const version = versionId ? selectTEIVersion(xmlDocument, versionId) : null;
+
+				const cetei = new CETEI();
+				cetei.setBaseUrl(new URL('.', source).href);
+				cetei.addBehaviors(behaviors(document));
+				const view = currentMode === 'df' ? diplomaticView : readingView;
+				view.replaceChildren(cetei.domToHTML5(xmlDocument));
+				cetei.processPage();
+				if (version) {
+					const pageBreaks = getTextPageBreaks(view);
+					if (pageBreaks.length !== version.pageBreakCount) {
+						throw new Error(`Page breaks could not be matched for TEI version "${version.id}".`);
+					}
+					if (version.initialPage) {
+						const division = Array.from(view.querySelectorAll('tei-div')).find(
+							(element) => element.getAttribute('id') === version.id
+						);
+						if (!division) {
+							throw new Error(`Rendered TEI division "${version.id}" not found.`);
+						}
+						const marker = document.createElement('tei-pb');
+						marker.dataset.versionPageStart = '';
+						if (version.initialPage.n !== null) marker.setAttribute('n', version.initialPage.n);
+						if (version.initialPage.facs !== null) {
+							marker.setAttribute('facs', version.initialPage.facs);
+						}
+						division.prepend(marker);
+					}
+				}
+				wrapAnnotations(view);
+				processMetamarks(view);
+
+				const notes = view.querySelector('ol.notes');
+				if (notes) {
+					endnotes.append(notes);
+					endnotes.hidden = false;
+				}
+				status.hidden = true;
+				setMode(currentMode);
+			}
+
+			readingButton.addEventListener('click', () => setMode('lf'));
+			diplomaticButton.addEventListener('click', () => setMode('df'));
+
+			const sourceParameter = new URLSearchParams(window.location.search).get('url')?.trim();
+			if (sourceParameter) {
+				try {
+					const source = new URL(sourceParameter, window.location.href);
+					const sourceName = source.pathname.split('/').pop() || source.href;
+					try {
+						filename.textContent = decodeURIComponent(sourceName);
+					} catch {
+						filename.textContent = sourceName;
+					}
+					status.textContent = 'Loading…';
+					status.className = 'loading';
+					loadTEI(source).catch((error) => {
+						status.textContent =
+							error instanceof Error
+								? `Unable to load TEI: ${error.message}`
+								: 'Unable to load TEI.';
+						status.className = 'error';
+						status.hidden = false;
+					});
+				} catch (error) {
+					status.textContent =
+						error instanceof Error ? `Invalid TEI URL: ${error.message}` : 'Invalid TEI URL.';
+					status.className = 'error';
+				}
+			}
+		</script>
+	</body>
 </html>

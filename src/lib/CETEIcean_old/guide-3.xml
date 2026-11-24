@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-model
+href="https://dhbern.github.io/ceresa-oxygen-framework/tei_ceresa.rng"
+type="application/xml"
+schematypens="http://relaxng.org/ns/structure/1.0"?><?xml-model
+href="https://dhbern.github.io/ceresa-oxygen-framework/ceresa.sch"
+type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI
+  xmlns="http://www.tei-c.org/ns/1.0"
+  xml:id="A-1-b_1-1"
+  type="ceresa"
+  xml:base="https://arcipelago-ceresa.digitaleditions.ch/guide#"
+>
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Guide</title>
+        <respStmt>
+          <resp>Text encoding</resp>
+          <name />
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher />
+        <date />
+        <availability>
+          <licence target="https://creativecommons.org/licenses/by/4.0/"
+            >CC BY 4.0</licence
+          >
+        </availability>
+      </publicationStmt>
+      <notesStmt>
+        <note type="global_comment">
+          <p />
+        </note>
+      </notesStmt>
+      <sourceDesc>
+        <msDesc>
+          <msIdentifier>
+            <repository
+              >Archivio svizzero di letteratura (ASL): Lascito Alice
+              Ceresa</repository
+            >
+            <idno type="ASL">A-1-b/1-1</idno>
+          </msIdentifier>
+        </msDesc>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+      <langUsage>
+        <language ident="it" />
+      </langUsage>
+      <textClass>
+        <keywords ana="keywords">
+          <list>
+            <item />
+          </list>
+        </keywords>
+      </textClass>
+    </profileDesc>
+  </teiHeader>
+  <xi:include
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    href="https://dav.arcipelago-ceresa.digitaleditions.ch/data/sources/facs/A-1/A-1-b/A-1-b_1/A-1-b_1-1/A-1-b_1-1_facs.xml"
+  >
+    <xi:fallback />
+  </xi:include>
+  <text>
+    <body>
+      <!-- ######################################################### -->
+      <!-- (3) EDITORIAL INTERVENTIONS -->
+      <!-- ######################################################### -->
+      <h1>(3) Editorial Interventions</h1>
+
+      <!-- Editorial supplement -->
+      <h2>Editorial supplement</h2>
+      <div>
+        <p>
+          <rs type="person" key="person_9900"
+            >Carson McCuller<supplied>s</supplied></rs
+          >
+        </p>
+      </div>
+
+      <!-- Missing or illegible text -->
+      <h2>Missing or illegible text</h2>
+      <div>
+        <p>Lorem ipsum do<gap reason="illegible" quantity="2" /> sit amet...</p>
+        <p>Lorem ipsum do<gap reason="lost" quantity="9" /> sit amet...</p>
+        <p>Lorem ipsum do<gap reason="damage" quantity="21" /> sit amet...</p>
+      </div>
+
+      <!-- Uncertain readings -->
+      <h2>Uncertain readings</h2>
+      <div>
+        <p>Es ist <unclear>an</unclear> sich erschütternd zu denken.</p>
+      </div>
+
+      <!-- Choice -->
+      <div>
+        <h2>Choice: Orig/Reg</h2>
+        <!-- A stray uppercase pair caused by a mechanical typewriter slip -->
+        <p>
+          Era gra<choice><orig>VE</orig><reg>ve</reg></choice
+          >mente peggiorata a scuola
+        </p>
+
+        <!-- An obvious misspelling -->
+        <h2>Choice: Sic/Corr</h2>
+        <p>
+          <choice><sic>frequantate</sic><corr>frequentate</corr></choice>
+        </p>
+
+        <!-- Abbreviations -->
+        <h2>Choice: Abbr/Expan</h2>
+        <p>
+          e ne ricava un certo profitto,
+          <choice><abbr>ecc.</abbr><expan>eccetera</expan></choice>
+        </p>
+      </div>
+    </body>
+  </text>
+</TEI>
