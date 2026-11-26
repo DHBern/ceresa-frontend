@@ -49,9 +49,9 @@ In contrast to this, developing the preview code is much more ergonomically here
 
 The workflow requires the following repository secrets:
 
-* `WEBDAV_URL`
-* `WEBDAV_USERNAME`
-* `WEBDAV_PASSWORD`
+* `WEBDAV_URL` – base URL of the WebDAV endpoint
+* `WEBDAV_USERNAME` – WebDAV username
+* `WEBDAV_PASSWORD` – **important** the password needs to be stored in obscured form (run `rclone obscure YOUR_PASSWORD`)
 
 #### Technical Notes
 
